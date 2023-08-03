@@ -5,6 +5,7 @@ body{
   box-sizing: border-box;
   background-color: #350d36;
   height: 100%;
+  overflow: hidden;
 }
 .App {
     font-family: lack-Lato, Slack-Fractions, appleLogo, sans-serif;
@@ -19,6 +20,13 @@ body{
       overflow: hidden;
       outline: none;
       padding: 0px;
+      padding:5px;
+      border-radius: 5px;
+      color: rgba(255,255,255,0.7);
+      font-size: 15px;
+    }
+    .button:hover{
+      background: rgba(255,255,255,0.1);
     }
   }
   

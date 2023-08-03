@@ -1,0 +1,22 @@
+.navbar_header{
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    border-top: 1px solid rgb(82,38,83);
+    padding-right: 10px;
+    .navbar_header_info{
+        color: white !important;
+        font-size: 17px !important;
+        display: flex;
+        margin-left: 15px;
+        align-items: center;
+        font-weight: 600;
+    }
+    .navbar_header_newButton{
+        height: 36px;
+        width: 36px;
+        border-radius: 50%;
+    }
+}
