@@ -1,4 +1,13 @@
 .chat_list_container{
     flex: 1;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    margin-bottom: 10px;
+    overflow-anchor: none;
+}
+.chat_list_container_anchor{
+    overflow-anchor: auto;
+    height: 1px;
 }

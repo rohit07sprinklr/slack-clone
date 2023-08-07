@@ -12,7 +12,7 @@ export default function MessageBox(){
     return(
         <div className='message_container'>
             <div className={'message_input_container '.concat(textAreaActive?'active':'')}>
-                <textarea className='message_input_container_textarea' onFocus={handleOnFocus} onBlur={handleOnBlur}/>
+                <textarea className='message_input_container_textarea' onFocus={handleOnFocus} onBlur={handleOnBlur} autoFocus/>
             </div>
         </div>
     )
