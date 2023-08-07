@@ -1,26 +1,31 @@
+import { useContext, useEffect, useState } from 'react';
 import DateChat from '../DateChat/dateChat';
 import './chatList.css'
-import {msgArr} from './dummy'
+import { WorkspaceContext } from '../Mainpage/Mainpage';
+import { getMessagesFromChatID } from '../../httpServices/httpService';
+import { groupByDate } from '../../utils/utils';
+// import {msgArr} from './dummy'
 export default function ChatList(){
-    const getDateFromTimestamp = (timeStamp:number):string=>{
-        const dateTimeJS =  new Date(timeStamp * 1000);
-        return `${dateTimeJS.getDate()}-${dateTimeJS.getMonth()}-${dateTimeJS.getFullYear()}`
-    }
-    const groupByDate = (msgArr:any)=>{
-        return msgArr.reduce((map:any, itm:any)=>{
-            const currDate = getDateFromTimestamp(itm.timestamp)
-            return {
-                ...map,
-                [currDate]:[...(map[currDate]||[]),itm]
-            }
-        },{} as { [key: string]: [] })
-    }
-    const msgGrouped = groupByDate(msgArr)
+    const {selectedChatId} = useContext(WorkspaceContext);
+    const [messageList, setMessageList] = useState({} as {[key:string]:[]});
+    
+    useEffect(()=>{
+        const fetchMessagesFromChatId = async ()=>{
+            const currMessageList = await getMessagesFromChatID(selectedChatId);
+            console.log(currMessageList)
+            const groupedMessageList = groupByDate(currMessageList['messages']);
+            setMessageList(groupedMessageList)
+        }   
+        if(selectedChatId)
+            fetchMessagesFromChatId();
+    },[selectedChatId])
+
+    // const msgGrouped = groupByDate(msgArr)
     return(
         <div className='chat_list_container'>
             {
-                Object.keys(msgGrouped).map((key)=>{
-                    return <DateChat date={key} chatList={msgGrouped[key]}/>
+                Object.keys(messageList).map((key:string)=>{
+                    return <DateChat date={key} chatList={messageList[key]}/>
                 })
             }
             <div className='chat_list_container_anchor'></div>

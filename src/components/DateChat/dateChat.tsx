@@ -1,43 +1,7 @@
+import { formatDate } from '../../utils/utils';
 import SingleChat from '../SingleChat/singleChat';
 import './dateChat.css'
 export default function DateChat(props:any){
-    console.log(props.chatList)
-    function formatDate(inputDate:string) {
-        const months = [
-          "January", "February", "March", "April", "May", "June",
-          "July", "August", "September", "October", "November", "December"
-        ];
-      
-        const parts = inputDate.split("-");
-        const day = parseInt(parts[0]);
-        const monthIndex = parseInt(parts[1]) - 1; // Months are zero-indexed
-        const year = parseInt(parts[2]);
-      
-        const dateObject = new Date(year, monthIndex, day);
-        
-        const dayOfWeek = dateObject.toLocaleDateString("en-US", { weekday: "long" });
-        const monthName = months[monthIndex];
-        const daySuffix = getDaySuffix(day);
-      
-        return `${dayOfWeek}, ${monthName} ${day}${daySuffix}`;
-      }
-      
-    function getDaySuffix(day:number) {
-        if (day >= 11 && day <= 13) {
-            return "th";
-        }
-        switch (day % 10) {
-            case 1:
-            return "st";
-            case 2:
-            return "nd";
-            case 3:
-            return "rd";
-            default:
-            return "th";
-        }
-    }
-      
     return(
     <div className="date-chat-container">
         <div className="date-chat-divider">
@@ -48,7 +12,7 @@ export default function DateChat(props:any){
         </div>
         {
             props.chatList.map((chat:any)=>
-                <SingleChat userID={chat.sendorID} key={chat.id} text={chat.text} timestamp={chat.timestamp}/>
+                <SingleChat key={chat.id} userID={chat.sendorID} userName={chat.sendorName} userAvatar={chat.sendorAvatarSrc} text={chat.text} timestamp={chat.timestamp} />
             )
         }
     </div>

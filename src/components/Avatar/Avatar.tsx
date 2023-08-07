@@ -1,10 +1,8 @@
 import './avatar.css'
 
-export default function Avatar(props:any){
-    const getAvatarSrc = (userID:number)=>{
-        return 'assets/avatar'+userID.toString()+'.png'
-    }
+export default function Avatar(props:{avatarSrc:string, size:string}){
+    
     return(
-            <img src={getAvatarSrc(props.userID)} className={'avatar-container '+props.size}></img>
+            <img src={props.avatarSrc} className={'avatar-container '+props.size}></img>
     )
 }
