@@ -9,7 +9,7 @@ import { workspaceContextType } from "../../types/contextTypes";
 export const WorkspaceContext = createContext<workspaceContextType>({} as workspaceContextType );
 
 export default function Mainpage(){
-    const [selectedChatId,setSelectedChatId] = useState(0);
+    const [selectedChatId,setSelectedChatId] = useState(1);
     const [directChatProfiles, setDirectChatProfiles] = useState([]);
     
     useEffect(()=>{
@@ -26,6 +26,7 @@ export default function Mainpage(){
         <div className="mainpage_content_container">
             <WorkspaceContext.Provider value={{
                 selectedChatId,
+                directChatProfiles,
                 setSelectedChatId
             }}>
                 <Navbar directChatProfiles={directChatProfiles} />

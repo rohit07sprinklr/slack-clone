@@ -2,7 +2,6 @@ import { getTimeFromTimestamp } from "../../utils/utils";
 import Avatar from "../Avatar/Avatar";
 import './singleChat.css'
 export default function SingleChat(props:any){
-    console.log(props.userAvatar)
     return(
         <div className="chat-message-container">
             <Avatar size={'large'} avatarSrc={props.userAvatar} />

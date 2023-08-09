@@ -4,7 +4,9 @@ async function fetcher(url: string, params:any){
     const headers = new Headers();
     const options = {
         ...params,
-        headers: headers,
+        headers: {...headers,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'},
     }
     return fetch(url,options);
 }
@@ -25,4 +27,14 @@ async function getMessagesFromChatID(chatID: number){
     return result
 }
 
-export {getDirectChatProfiles, getMessagesFromChatID}
+async function postMessagesFromChatID(chatID: number, text: string){
+    const requestParams = {
+        method:HTTP_METHODS.POST,
+        body:JSON.stringify({message:text})
+    }
+    const responses = await fetcher(BASE_URL + DIRECT_CHATS + `/${chatID}`,requestParams)
+    const result = await responses.json()
+    return result
+}
+
+export {getDirectChatProfiles, getMessagesFromChatID, postMessagesFromChatID}

@@ -5,7 +5,6 @@
     flex-direction: column;
     overflow: scroll;
     margin-bottom: 10px;
-    overflow-anchor: none;
 }
 .chat_list_container_anchor{
     overflow-anchor: auto;
