@@ -1,33 +1,33 @@
-.workspace{
+.workspace {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: white;
+  .workspace_item {
+    /* height: 30px; */
     display: flex;
-    flex-direction: column;
-    flex:1;
-    background-color: white;
-    .workspace_item{
-        /* height: 30px; */
-        display: flex;
-        padding: 10px 15px;
-        border-bottom: 1px solid #0000001f;
-        .workspace_item_button{
-            display: flex;
-            align-items: center;
-            padding: 5px 10px;
-            color: black !important;
-            font-size: 18px;
-            font-weight: 800;
-            gap: 5px;
-        }
-        .workspace_item_button:hover{
-            background-color: rgb(240, 240, 240);
-        }
-        .workspace_item_button_add_bookmark{
-            color: grey !important;
-            font-weight: 500;
-            font-size: 13px;
-            gap: 5px;
-        }
+    padding: 10px 15px;
+    border-bottom: 1px solid #0000001f;
+    .workspace_item_button {
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+      color: black !important;
+      font-size: 18px;
+      font-weight: 800;
+      gap: 5px;
     }
-    .workspace_item_bookmark{
-        padding: 3px 15px;
+    .workspace_item_button:hover {
+      background-color: rgb(240, 240, 240);
     }
+    .workspace_item_button_add_bookmark {
+      color: grey !important;
+      font-weight: 500;
+      font-size: 13px;
+      gap: 5px;
+    }
+  }
+  .workspace_item_bookmark {
+    padding: 3px 15px;
+  }
 }

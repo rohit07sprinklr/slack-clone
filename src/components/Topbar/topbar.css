@@ -1,20 +1,20 @@
-.topbar{
-    display: flex;
-    justify-content: space-evenly;
-    padding: 10px 0px 10px 0px;
-    position: sticky;
-    top: 0;
-    color: white;
-    gap: 20px;
+.topbar {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px 0px 10px 0px;
+  position: sticky;
+  top: 0;
+  color: white;
+  gap: 20px;
 }
-.topbar_item{
-    flex:0.8;
+.topbar_item {
+  flex: 0.8;
 }
-.topbar_item_center{
-    flex:1.2;
+.topbar_item_center {
+  flex: 1.2;
 }
-.topbar_item_left{
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+.topbar_item_left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }

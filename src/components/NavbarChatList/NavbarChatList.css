@@ -1,34 +1,34 @@
-.navbar_chatList{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.navbar_chatList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.navbar_chatList_item{
-    margin-top: 10px;
+.navbar_chatList_item {
+  margin-top: 10px;
 }
-.navbar_chatList_options{
-    height: 28px;
+.navbar_chatList_options {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  margin: 0px 10px;
+  padding: 0px 12px;
+  .navbar_chatList_button {
     display: flex;
     align-items: center;
-    margin: 0px 10px;
-    padding: 0px 12px;
-    .navbar_chatList_button{
-        display: flex;
-        align-items: center;
-        height: 100%;
-        justify-content: center;
-        width: 25px;
-        margin-right: 4px;
+    height: 100%;
+    justify-content: center;
+    width: 25px;
+    margin-right: 4px;
+  }
+  .arrow {
+    padding: 0px;
+    width: 0;
+    height: 0;
+    border-bottom: 5px solid transparent;
+    border-top: 5px solid transparent;
+    border-left: 5px solid rgba(255, 255, 255, 0.7);
+    &.expanded {
+      transform: rotate(90deg);
     }
-    .arrow{
-        padding: 0px;
-        width: 0;
-        height: 0;
-        border-bottom: 5px solid transparent;
-        border-top: 5px solid transparent;
-        border-left: 5px solid rgba(255,255,255,0.7);
-        &.expanded{
-            transform: rotate(90deg);
-        }
-        }
+  }
 }

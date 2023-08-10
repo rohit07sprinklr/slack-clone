@@ -1,5 +1,5 @@
-import { MessageDataType } from "./dataTypes"
+import { MessageDataType } from './dataTypes';
 
 export type MessageBoxPropType = {
-    updateMessageCallback : (message: MessageDataType) => void
-}
+  updateMessageCallback: (message: MessageDataType) => void;
+};

@@ -1,8 +1,7 @@
-.navbar_quick_access{
-    display: flex;
-    flex-direction: column;
-    padding: 10px 0px;
-    border-top: 1px solid rgb(82,38,83);
-    border-bottom: 1px solid rgb(82,38,83);
-    
+.navbar_quick_access {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0px;
+  border-top: 1px solid rgb(82, 38, 83);
+  border-bottom: 1px solid rgb(82, 38, 83);
 }

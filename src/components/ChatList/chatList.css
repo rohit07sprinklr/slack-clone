@@ -1,12 +1,12 @@
-.chat_list_container{
-    flex: 1;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    overflow: scroll;
-    margin-bottom: 10px;
+.chat_list_container {
+  flex: 1;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  margin-bottom: 10px;
 }
-.chat_list_container_anchor{
-    overflow-anchor: auto;
-    height: 1px;
+.chat_list_container_anchor {
+  overflow-anchor: auto;
+  height: 1px;
 }
