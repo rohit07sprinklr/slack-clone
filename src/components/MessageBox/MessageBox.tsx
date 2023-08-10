@@ -1,11 +1,12 @@
 import { useContext, useState } from 'react'
 import './messageBox.css'
 import { MessageBoxPropType } from '../../types/propTypes';
-import { postMessagesFromChatID } from '../../httpServices/httpService';
+import { postMessagesFromChannelID, postMessagesFromChatID, postMessagesFromGroupID } from '../../httpServices/httpService';
 import { WorkspaceContext } from '../Mainpage/Mainpage';
+import { CHAT_TYPE } from '../../utils/constants';
 
 export default function MessageBox(props:MessageBoxPropType){
-    const {selectedChatId} = useContext(WorkspaceContext);
+    const {selectedChatWindow} = useContext(WorkspaceContext);
     const [textAreaActive, setTextAreaActive] = useState<boolean>(false);
     const [textInput, setTextInput] = useState<string>('');
 
@@ -20,7 +21,8 @@ export default function MessageBox(props:MessageBoxPropType){
         setTextInput(newInputValue)
     }
     const handleSubmit = async ()=>{
-        const newMessageResponse = await postMessagesFromChatID(selectedChatId, textInput);
+        const fetchFunction = selectedChatWindow.type === CHAT_TYPE.DIRECT? postMessagesFromChatID: selectedChatWindow.type === CHAT_TYPE.CHANNEL? postMessagesFromChannelID: postMessagesFromGroupID
+        const newMessageResponse = await fetchFunction(selectedChatWindow.id, textInput);
         setTextInput('');
         props.updateMessageCallback(newMessageResponse);
     }

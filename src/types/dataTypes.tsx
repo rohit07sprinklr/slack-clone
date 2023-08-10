@@ -13,3 +13,8 @@ export type MessageDataType = {
     sendorAvatarSrc: string,
     sendorName: string
 }
+
+export type ChatWindowDataType = {
+    type: number,
+    id: number
+}

@@ -5,7 +5,7 @@ import { useContext, useEffect, useLayoutEffect, useRef } from 'react';
 import { WorkspaceContext } from '../Mainpage/Mainpage';
 
 export default function ChatList(props:{messageList:any}){
-    const {selectedChatId} = useContext(WorkspaceContext);
+    const {selectedChatWindow} = useContext(WorkspaceContext);
     const groupedMessageList = groupByDate(props.messageList);
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -19,7 +19,7 @@ export default function ChatList(props:{messageList:any}){
             containerRef.current.scrollTop = containerRef.current?.scrollHeight
         }
     },[props.messageList.length])
-    
+
     return(
         <div ref={containerRef} className='chat_list_container'>
             {

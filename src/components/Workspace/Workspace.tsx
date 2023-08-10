@@ -5,21 +5,24 @@ import Bookmarks from '../Bookmarks/Bookmarks'
 import WorkspaceHeader from '../WorkspaceHeader/WorkspaceHeader'
 import { useContext, useEffect, useState } from 'react'
 import { WorkspaceContext } from '../Mainpage/Mainpage'
-import { getMessagesFromChatID } from '../../httpServices/httpService'
+import { getMessagesFromChannelID, getMessagesFromChatID, getMessagesFromGroupID } from '../../httpServices/httpService'
 import { MessageDataType } from '../../types/dataTypes'
+import { CHAT_TYPE } from '../../utils/constants'
 
 export default function Workspace(){
-    const {selectedChatId} = useContext(WorkspaceContext);
+    const {selectedChatWindow} = useContext(WorkspaceContext);
     const [messageList, setMessageList] = useState<MessageDataType[]>([]);
+
     
     useEffect(()=>{
-        const fetchMessagesFromChatId = async ()=>{
-            const currMessageList = await getMessagesFromChatID(selectedChatId);
+        const fetchMessages = async ()=>{
+            const fetchFunction = selectedChatWindow.type === CHAT_TYPE.DIRECT? getMessagesFromChatID: selectedChatWindow.type === CHAT_TYPE.CHANNEL? getMessagesFromChannelID: getMessagesFromGroupID
+            const currMessageList = await fetchFunction(selectedChatWindow.id);
             setMessageList(currMessageList['messages'])
         }   
-        if(selectedChatId)
-            fetchMessagesFromChatId();
-    },[selectedChatId])
+        if(selectedChatWindow.type && selectedChatWindow.id)
+            fetchMessages();
+    },[selectedChatWindow])
 
     const updateMessageCallback = (newMessageObj: MessageDataType)=>{
         setMessageList([...messageList, {...newMessageObj}]);
@@ -30,7 +33,7 @@ export default function Workspace(){
             <WorkspaceHeader/>
             <Bookmarks/>
             <ChatList messageList={messageList}/>
-            <MessageBox key={selectedChatId} updateMessageCallback={updateMessageCallback}/>
+            <MessageBox key={`${selectedChatWindow.type}_${selectedChatWindow.id}`} updateMessageCallback={updateMessageCallback}/>
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import Huddle from '../Huddle/Huddle'
 import NavbarHeader from '../NavbarHeader/NavbarHeader'
 import QuickAccess from '../QuickAccess/QuickAccess'
-import UserChatList from '../UserChatList/UserChatList'
+import NavbarChatList from '../NavbarChatList/NavbarChatList'
 import './navbar.css'
 
 export default function Navbar(props:any){
@@ -9,7 +9,7 @@ export default function Navbar(props:any){
         <div className="navbar">
             <NavbarHeader/>
             <QuickAccess/>
-            <UserChatList directChatProfiles={props.directChatProfiles} />
+            <NavbarChatList/>
             <Huddle/>
         </div>
     )

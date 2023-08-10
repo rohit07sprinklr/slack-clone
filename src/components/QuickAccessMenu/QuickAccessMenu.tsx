@@ -1,6 +1,5 @@
-import './menuItem.css'
 
-export default function MenuItem(props:{title:string, svgComponent: any}){
+export default function QuickAccessMenu(props:{title:string, svgComponent: any}){
     return(
         <button className='button navbar_quick_access_menu' >
                 {props.svgComponent}

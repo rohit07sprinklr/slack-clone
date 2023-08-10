@@ -1,5 +1,9 @@
+import { ChatWindowDataType } from "./dataTypes"
+
 export type workspaceContextType = {
-    selectedChatId: number,
+    selectedChatWindow: ChatWindowDataType,
     directChatProfiles: any,
-    setSelectedChatId: (a:number)=>void
+    groupChats: any,
+    channels:any,
+    setSelectedChatWindow: (a:ChatWindowDataType)=>void
 }
