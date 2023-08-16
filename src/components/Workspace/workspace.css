@@ -31,3 +31,18 @@
     padding: 3px 15px;
   }
 }
+
+.chat_list_container {
+  flex: 1;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  margin-bottom: 10px;
+}
+.chat_list_loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}

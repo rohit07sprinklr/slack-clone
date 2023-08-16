@@ -11,14 +11,14 @@ export default function WorkspaceHeader() {
 
   const getChatInfoFromID = () => {
     const searchList =
-      selectedChatWindow.type === CHAT_TYPE.DIRECT
+      selectedChatWindow?.type === CHAT_TYPE.DIRECT
         ? directChatProfiles
-        : selectedChatWindow.type === CHAT_TYPE.CHANNEL
+        : selectedChatWindow?.type === CHAT_TYPE.CHANNEL
         ? channels
         : groupChats;
     console.log(searchList);
     const chatInfo = searchList.filter(
-      (itm: ChatUser) => itm.id === selectedChatWindow.id
+      (itm: ChatUser) => itm.id === selectedChatWindow?.id
     );
     return chatInfo.length ? chatInfo[0] : { name: '' };
   };
@@ -31,7 +31,7 @@ export default function WorkspaceHeader() {
   return (
     <div className="workspace_item">
       <button className="button workspace_item_button">
-        {selectedChatWindow.type === CHAT_TYPE.CHANNEL ? (
+        {selectedChatWindow?.type === CHAT_TYPE.CHANNEL ? (
           <svg
             xmlnsXlink="http://www.w3.org/1999/xlink"
             xmlns="http://www.w3.org/2000/svg"

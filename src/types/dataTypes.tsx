@@ -17,4 +17,4 @@ export type MessageDataType = {
 export type ChatWindowDataType = {
   type: number;
   id: number;
-};
+} | null;

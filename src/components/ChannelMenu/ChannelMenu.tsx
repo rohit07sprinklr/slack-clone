@@ -14,8 +14,8 @@ export default function ChannelMenu(props: {
     <button
       className="button navbar_quick_access_menu"
       id={
-        selectedChatWindow.type === CHAT_TYPE.CHANNEL &&
-        selectedChatWindow.id === props.chatID
+        selectedChatWindow?.type === CHAT_TYPE.CHANNEL &&
+        selectedChatWindow?.id === props.chatID
           ? 'active'
           : ''
       }

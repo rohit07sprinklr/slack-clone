@@ -15,8 +15,8 @@ export default function DirectMessageUser(props: {
     <button
       className={'button navbar_quick_access_menu'}
       id={
-        selectedChatWindow.type === CHAT_TYPE.DIRECT &&
-        selectedChatWindow.id === props.profileID
+        selectedChatWindow?.type === CHAT_TYPE.DIRECT &&
+        selectedChatWindow?.id === props.profileID
           ? 'active'
           : ''
       }

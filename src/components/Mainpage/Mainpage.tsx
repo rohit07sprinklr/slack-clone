@@ -17,8 +17,7 @@ export const WorkspaceContext = createContext<workspaceContextType>(
 
 export default function Mainpage() {
   const [selectedChatWindow, setSelectedChatWindow] =
-    useState<ChatWindowDataType>({ type: 0, id: 0 });
-  // const [selectedChatId,setSelectedChatId] = useState(1);
+    useState<ChatWindowDataType>(null);
   const [directChatProfiles, setDirectChatProfiles] = useState([]);
   const [groupChats, setGroupChats] = useState([]);
   const [channels, setChannels] = useState([]);

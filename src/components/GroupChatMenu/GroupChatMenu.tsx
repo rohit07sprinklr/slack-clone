@@ -14,8 +14,8 @@ export default function GroupChatMenu(props: {
     <button
       className={'button navbar_quick_access_menu'}
       id={
-        selectedChatWindow.type === CHAT_TYPE.GROUP &&
-        selectedChatWindow.id === props.groupID
+        selectedChatWindow?.type === CHAT_TYPE.GROUP &&
+        selectedChatWindow?.id === props.groupID
           ? 'active'
           : ''
       }

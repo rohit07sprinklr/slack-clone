@@ -1,10 +1,12 @@
+import { useLayoutEffect, useRef } from 'react';
 import { formatDate } from '../../utils/utils';
 import SingleChat from '../SingleChat/singleChat';
 import './dateChat.css';
+
 export default function DateChat(props: any) {
   return (
     <div className="date-chat-container">
-      <div className="date-chat-divider">
+      <div className="date-chat-divider-button">
         <button className="button" id="date-divider-button">
           {formatDate(props.date)}
           <svg
@@ -25,6 +27,8 @@ export default function DateChat(props: any) {
           </svg>
         </button>
       </div>
+      <div className="date-chat-divider"></div>
+
       {props.chatList.map((chat: any) => (
         <SingleChat
           key={chat.id}

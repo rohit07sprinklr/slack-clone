@@ -26,17 +26,19 @@ export default function MessageBox(props: MessageBoxPropType) {
   };
   const handleSubmit = async () => {
     const fetchFunction =
-      selectedChatWindow.type === CHAT_TYPE.DIRECT
+      selectedChatWindow?.type === CHAT_TYPE.DIRECT
         ? postMessagesFromChatID
-        : selectedChatWindow.type === CHAT_TYPE.CHANNEL
+        : selectedChatWindow?.type === CHAT_TYPE.CHANNEL
         ? postMessagesFromChannelID
         : postMessagesFromGroupID;
-    const newMessageResponse = await fetchFunction(
-      selectedChatWindow.id,
-      textInput
-    );
-    setTextInput('');
-    props.updateMessageCallback(newMessageResponse);
+    if (selectedChatWindow) {
+      const newMessageResponse = await fetchFunction(
+        selectedChatWindow?.id,
+        textInput
+      );
+      setTextInput('');
+      props.updateMessageCallback(newMessageResponse);
+    }
   };
   return (
     <div className="message_container">
