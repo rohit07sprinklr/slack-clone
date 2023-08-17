@@ -3,7 +3,8 @@ import {
   CHANNEL_CHATS,
   DIRECT_CHATS,
   GROUP_CHATS,
-  HTTP_METHODS
+  HTTP_METHODS,
+  LOGIN
 } from '../utils/constants';
 
 async function fetcher(url: string, params: any) {
@@ -18,6 +19,17 @@ async function fetcher(url: string, params: any) {
   };
   return fetch(url, options);
 }
+
+async function postLogin(email: string, password: string) {
+  const requestParams = {
+    method: HTTP_METHODS.POST,
+    body: JSON.stringify({ email: email, password: password })
+  };
+  const responses = await fetcher(BASE_URL + LOGIN, requestParams);
+  const result = await responses.json();
+  return result;
+}
+
 async function getDirectChatProfiles() {
   const requestParams = {
     method: HTTP_METHODS.GET
@@ -126,5 +138,6 @@ export {
   getMessagesFromChannelID,
   getMessagesFromGroupID,
   postMessagesFromChannelID,
-  postMessagesFromGroupID
+  postMessagesFromGroupID,
+  postLogin
 };

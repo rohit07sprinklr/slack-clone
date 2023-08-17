@@ -46,3 +46,25 @@
   justify-content: center;
   height: 100%;
 }
+
+.welcome {
+  justify-content: center;
+  gap: 30px;
+}
+.welcome_header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-weight: 200;
+}
+.welcome_header > img {
+  height: 80px;
+}
+.welcome_header > span {
+  font-size: 80px;
+}
+.welcome_subheader > span {
+  font-size: 30px;
+  font-weight: 100;
+}

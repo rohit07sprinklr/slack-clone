@@ -6,7 +6,7 @@ import {
   postMessagesFromChatID,
   postMessagesFromGroupID
 } from '../../httpServices/httpService';
-import { WorkspaceContext } from '../Mainpage/Mainpage';
+import { WorkspaceContext } from '../Homepage/Homepage';
 import { CHAT_TYPE } from '../../utils/constants';
 
 export default function MessageBox(props: MessageBoxPropType) {

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { WorkspaceContext } from '../Mainpage/Mainpage';
+import { WorkspaceContext } from '../Homepage/Homepage';
 import { ChatUser } from '../../types/dataTypes';
 import Avatar from '../Avatar/Avatar';
 import { CHAT_TYPE } from '../../utils/constants';

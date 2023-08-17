@@ -1,3 +1,15 @@
+export function populateStorage(feild: string, value: any) {
+  localStorage.setItem(feild, JSON.stringify(value));
+}
+export function getStorage(feild: string): any {
+  const res = localStorage.getItem(feild);
+  if (res) return JSON.parse(res);
+  return null;
+}
+export function deleteStorage(feild: string) {
+  localStorage.removeItem(feild);
+}
+
 export const getDateFromTimestamp = (timeStamp: number): string => {
   const dateTimeJS = new Date(timeStamp * 1000);
   return `${dateTimeJS.getDate()}-${dateTimeJS.getMonth()}-${dateTimeJS.getFullYear()}`;

@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import DirectMessageUser from '../DirectMessageUser/DirectMessageUser';
 import ChannelMenu from '../ChannelMenu/ChannelMenu';
 import './NavbarChatList.css';
-import { WorkspaceContext } from '../Mainpage/Mainpage';
+import { WorkspaceContext } from '../Homepage/Homepage';
 import GroupChatMenu from '../GroupChatMenu/GroupChatMenu';
 
 function ChannelIconElement() {

@@ -1,68 +1,53 @@
-import { createContext, useEffect, useState } from 'react';
-import Navbar from '../Navbar/Navbar';
-import Topbar from '../Topbar/Topbar';
-import Workspace from '../Workspace/Workspace';
+import { createContext, useCallback, useEffect, useState } from 'react';
 import './mainpage.css';
-import {
-  getChannelChat,
-  getDirectChatProfiles,
-  getGroupChat
-} from '../../httpServices/httpService';
-import { workspaceContextType } from '../../types/contextTypes';
-import { ChatWindowDataType } from '../../types/dataTypes';
+import { UserDataType } from '../../types/dataTypes';
+import Login from '../Login/Login';
+import Homepage from '../Homepage/Homepage';
+import { deleteStorage, getStorage, populateStorage } from '../../utils/utils';
+import { UserContextType } from '../../types/contextTypes';
 
-export const WorkspaceContext = createContext<workspaceContextType>(
-  {} as workspaceContextType
+export const UserContext = createContext<UserContextType>(
+  {} as UserContextType
 );
 
 export default function Mainpage() {
-  const [selectedChatWindow, setSelectedChatWindow] =
-    useState<ChatWindowDataType>(null);
-  const [directChatProfiles, setDirectChatProfiles] = useState([]);
-  const [groupChats, setGroupChats] = useState([]);
-  const [channels, setChannels] = useState([]);
+  const [authenticated, setAuthenticated] = useState<boolean>(false);
+  const [user, setUser] = useState<UserDataType>(null);
 
   useEffect(() => {
-    async function fetchDirectChatProfiles() {
-      const profiles = await getDirectChatProfiles();
-      setDirectChatProfiles(profiles['profiles']);
+    if (getStorage('authenticated')) {
+      setAuthenticated(true);
+      setUser(getStorage('user'));
     }
-    fetchDirectChatProfiles();
   }, []);
 
-  useEffect(() => {
-    async function fetchGroupChats() {
-      const groups = await getGroupChat();
-      setGroupChats(groups['groups']);
-    }
-    fetchGroupChats();
+  const loginCallback = useCallback((userData: UserDataType) => {
+    populateStorage('authenticated', true);
+    populateStorage('user', userData);
+    setUser(userData);
+    setAuthenticated(true);
   }, []);
 
-  useEffect(() => {
-    async function fetchChannels() {
-      const channels = await getChannelChat();
-      setChannels(channels['channels']);
-    }
-    fetchChannels();
+  const logoutCallback = useCallback(() => {
+    deleteStorage('authenticated');
+    deleteStorage('user');
+    setAuthenticated(false);
+    window.location.reload();
   }, []);
-
   return (
-    <div className="mainpage">
-      <Topbar />
-      <div className="mainpage_content_container">
-        <WorkspaceContext.Provider
+    <>
+      {authenticated ? (
+        <UserContext.Provider
           value={{
-            selectedChatWindow,
-            directChatProfiles,
-            channels,
-            groupChats,
-            setSelectedChatWindow
+            user,
+            logoutCallback
           }}
         >
-          <Navbar />
-          <Workspace />
-        </WorkspaceContext.Provider>
-      </div>
-    </div>
+          <Homepage />
+        </UserContext.Provider>
+      ) : (
+        <Login loginCallback={loginCallback} />
+      )}
+    </>
   );
 }

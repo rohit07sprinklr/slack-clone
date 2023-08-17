@@ -1,4 +1,4 @@
-import { ChatWindowDataType } from './dataTypes';
+import { ChatWindowDataType, UserDataType } from './dataTypes';
 
 export type workspaceContextType = {
   selectedChatWindow: ChatWindowDataType;
@@ -6,4 +6,9 @@ export type workspaceContextType = {
   groupChats: any;
   channels: any;
   setSelectedChatWindow: (a: ChatWindowDataType) => void;
+};
+
+export type UserContextType = {
+  user: UserDataType;
+  logoutCallback: () => void;
 };

@@ -18,3 +18,10 @@ export type ChatWindowDataType = {
   type: number;
   id: number;
 } | null;
+
+export type UserDataType = {
+  id: number;
+  name: string;
+  imageSrc: string;
+  groups: number[];
+} | null;

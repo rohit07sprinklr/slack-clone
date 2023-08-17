@@ -10,7 +10,7 @@ import {
   useRef,
   useState
 } from 'react';
-import { WorkspaceContext } from '../Mainpage/Mainpage';
+import { WorkspaceContext } from '../Homepage/Homepage';
 import {
   getMessagesFromChannelID,
   getMessagesFromChatID,
@@ -60,24 +60,38 @@ export default function Workspace() {
     }
   }, [messageList.length]);
 
-  return (
-    <div className="workspace">
-      <WorkspaceHeader />
-      <Bookmarks />
-      <div className="chat_list_container" ref={containerRef}>
-        {showLoader ? (
-          <div className="chat_list_loader">
-            <Loader />
-          </div>
-        ) : (
-          <ChatList messageList={messageList} />
-        )}
-      </div>
+  if (selectedChatWindow) {
+    return (
+      <div className="workspace">
+        <WorkspaceHeader />
+        <Bookmarks />
+        <div className="chat_list_container" ref={containerRef}>
+          {showLoader ? (
+            <div className="chat_list_loader">
+              <Loader />
+            </div>
+          ) : (
+            <ChatList messageList={messageList} />
+          )}
+        </div>
 
-      <MessageBox
-        key={`${selectedChatWindow?.type}_${selectedChatWindow?.id}`}
-        updateMessageCallback={updateMessageCallback}
-      />
-    </div>
-  );
+        <MessageBox
+          key={`${selectedChatWindow?.type}_${selectedChatWindow?.id}`}
+          updateMessageCallback={updateMessageCallback}
+        />
+      </div>
+    );
+  } else {
+    return (
+      <div className="workspace welcome">
+        <div className="welcome_header">
+          <img src="assets/waving_hand.png"></img>
+          <span>Welcome!</span>
+        </div>
+        <div className="welcome_subheader">
+          <span>Slack is a messaging app for teams</span>
+        </div>
+      </div>
+    );
+  }
 }

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import Avatar from '../Avatar/Avatar';
-import { WorkspaceContext } from '../Mainpage/Mainpage';
+import { WorkspaceContext } from '../Homepage/Homepage';
 import { CHAT_TYPE } from '../../utils/constants';
 
 export default function GroupChatMenu(props: {
