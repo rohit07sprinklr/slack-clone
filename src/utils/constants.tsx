@@ -3,6 +3,7 @@ export const BASE_URL = 'http://localhost:4000';
 export const DIRECT_CHATS = '/direct-chats';
 export const GROUP_CHATS = '/group-chats';
 export const CHANNEL_CHATS = '/channels';
+export const LOGIN = '/login';
 
 export const HTTP_METHODS = {
   GET: 'GET',
