@@ -4,17 +4,21 @@ import {
   DIRECT_CHATS,
   GROUP_CHATS,
   HTTP_METHODS,
-  LOGIN
+  LOGIN,
+  PROFILE
 } from '../utils/constants';
+import { getStorage } from '../utils/utils';
 
 async function fetcher(url: string, params: any) {
   const headers = new Headers();
+  const token = getStorage('token');
   const options = {
     ...params,
     headers: {
       ...headers,
       Accept: 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: token
     }
   };
   return fetch(url, options);
@@ -25,7 +29,24 @@ async function postLogin(email: string, password: string) {
     method: HTTP_METHODS.POST,
     body: JSON.stringify({ email: email, password: password })
   };
-  const responses = await fetcher(BASE_URL + LOGIN, requestParams);
+  const headers = new Headers();
+  const responses = await fetch(BASE_URL + LOGIN, {
+    ...requestParams,
+    headers: {
+      ...headers,
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  });
+  const result = await responses.json();
+  return result;
+}
+
+async function getProfile() {
+  const requestParams = {
+    method: HTTP_METHODS.GET
+  };
+  const responses = await fetcher(BASE_URL + PROFILE, requestParams);
   const result = await responses.json();
   return result;
 }
@@ -139,5 +160,6 @@ export {
   getMessagesFromGroupID,
   postMessagesFromChannelID,
   postMessagesFromGroupID,
-  postLogin
+  postLogin,
+  getProfile
 };

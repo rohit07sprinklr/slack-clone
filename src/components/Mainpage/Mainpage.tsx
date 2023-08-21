@@ -5,6 +5,7 @@ import Login from '../Login/Login';
 import Homepage from '../Homepage/Homepage';
 import { deleteStorage, getStorage, populateStorage } from '../../utils/utils';
 import { UserContextType } from '../../types/contextTypes';
+import { getProfile } from '../../httpServices/httpService';
 
 export const UserContext = createContext<UserContextType>(
   {} as UserContextType
@@ -14,23 +15,25 @@ export default function Mainpage() {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<UserDataType>(null);
 
+  const fetchAndPopulateProfile = async () => {
+    const userData = await getProfile();
+    setUser(userData);
+  };
+
   useEffect(() => {
-    if (getStorage('authenticated')) {
+    if (getStorage('token')) {
+      fetchAndPopulateProfile();
       setAuthenticated(true);
-      setUser(getStorage('user'));
     }
   }, []);
 
-  const loginCallback = useCallback((userData: UserDataType) => {
-    populateStorage('authenticated', true);
-    populateStorage('user', userData);
-    setUser(userData);
+  const loginCallback = useCallback(() => {
+    fetchAndPopulateProfile();
     setAuthenticated(true);
   }, []);
 
   const logoutCallback = useCallback(() => {
-    deleteStorage('authenticated');
-    deleteStorage('user');
+    deleteStorage('token');
     setAuthenticated(false);
     window.location.reload();
   }, []);
