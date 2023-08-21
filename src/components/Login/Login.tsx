@@ -2,6 +2,7 @@ import { ReactEventHandler, useState } from 'react';
 import './login.css';
 import { postLogin } from '../../httpServices/httpService';
 import { UserDataType } from '../../types/dataTypes';
+import { populateStorage } from '../../utils/utils';
 
 export default function Login(props: any) {
   const [email, setEmail] = useState<string>('');
@@ -10,8 +11,10 @@ export default function Login(props: any) {
   const handleSubmit = (event: any) => {
     event.preventDefault();
     postLogin(email, password)
-      .then((res) => {
-        props.loginCallback(res);
+      .then((tokenResponse) => {
+        const token = tokenResponse.token;
+        populateStorage('token', token);
+        props.loginCallback(token);
       })
       .catch((err) => {
         console.log(err);
