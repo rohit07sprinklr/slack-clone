@@ -6,11 +6,11 @@ import {
   postMessagesFromChatID,
   postMessagesFromGroupID
 } from '../../httpServices/httpService';
-import { WorkspaceContext } from '../Homepage/Homepage';
 import { CHAT_TYPE } from '../../utils/constants';
+import { useWorkspace } from '../WorkspaceProvider/WorkspaceProvider';
 
 export default function MessageBox(props: MessageBoxPropType) {
-  const { selectedChatWindow } = useContext(WorkspaceContext);
+  const { selectedChatWindow } = useWorkspace();
   const [textAreaActive, setTextAreaActive] = useState<boolean>(false);
   const [textInput, setTextInput] = useState<string>('');
 

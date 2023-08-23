@@ -1,4 +1,3 @@
-import Huddle from '../Huddle/Huddle';
 import NavbarHeader from '../NavbarHeader/NavbarHeader';
 import QuickAccess from '../QuickAccess/QuickAccess';
 import NavbarChatList from '../NavbarChatList/NavbarChatList';
@@ -10,7 +9,6 @@ export default function Navbar(props: any) {
       <NavbarHeader />
       <QuickAccess />
       <NavbarChatList />
-      <Huddle />
     </div>
   );
 }

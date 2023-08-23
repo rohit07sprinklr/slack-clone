@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
-import { WorkspaceContext } from '../Homepage/Homepage';
 import { ChatUser } from '../../types/dataTypes';
 import Avatar from '../Avatar/Avatar';
 import { CHAT_TYPE } from '../../utils/constants';
+import { useWorkspace } from '../WorkspaceProvider/WorkspaceProvider';
 
 export default function WorkspaceHeader() {
   const { selectedChatWindow, directChatProfiles, groupChats, channels } =
-    useContext(WorkspaceContext);
+    useWorkspace();
   const [currentUser, setCurrentUser] = useState<ChatUser>({} as ChatUser);
 
   const getChatInfoFromID = () => {

@@ -31,7 +31,9 @@
     padding: 3px 15px;
   }
 }
-
+.chat_list_header {
+  flex: 1;
+}
 .chat_list_container {
   flex: 1;
   background-color: white;

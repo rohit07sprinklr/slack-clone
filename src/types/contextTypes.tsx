@@ -10,5 +10,6 @@ export type workspaceContextType = {
 
 export type UserContextType = {
   user: UserDataType;
+  loginCallback: (token: string) => void;
   logoutCallback: () => void;
 };
