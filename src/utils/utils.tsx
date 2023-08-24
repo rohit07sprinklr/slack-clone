@@ -1,13 +1,13 @@
-export function populateStorage(feild: string, value: any) {
-  localStorage.setItem(feild, JSON.stringify(value));
+export function populateStorage(field: string, value: any) {
+  localStorage.setItem(field, JSON.stringify(value));
 }
-export function getStorage(feild: string): any {
-  const res = localStorage.getItem(feild);
+export function getStorage(field: string): any {
+  const res = localStorage.getItem(field);
   if (res) return JSON.parse(res);
   return null;
 }
-export function deleteStorage(feild: string) {
-  localStorage.removeItem(feild);
+export function deleteStorage(field: string) {
+  localStorage.removeItem(field);
 }
 
 export const getDateFromTimestamp = (timeStamp: number): string => {

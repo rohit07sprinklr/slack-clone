@@ -7,9 +7,3 @@ export type workspaceContextType = {
   channels: any;
   setSelectedChatWindow: (a: ChatWindowDataType) => void;
 };
-
-export type UserContextType = {
-  user: UserDataType;
-  loginCallback: (token: string) => void;
-  logoutCallback: () => void;
-};

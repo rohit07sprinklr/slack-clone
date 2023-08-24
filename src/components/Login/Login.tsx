@@ -2,20 +2,31 @@ import { useState } from 'react';
 import './login.css';
 import { postLogin } from '../../httpServices/httpService';
 import { populateStorage } from '../../utils/utils';
-import { useUser } from '../UserProvider/UserProvider';
 
 export default function Login() {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const { loginCallback } = useUser();
+  const [formState, setFormState] = useState<{
+    email: string;
+    password: string;
+  }>({ email: '', password: '' });
+
+  const handlePasswordChange = (e: any) => {
+    setFormState((val) => {
+      return { ...val, password: e.target.value };
+    });
+  };
+  const handleEmailChange = (e: any) => {
+    setFormState((val) => {
+      return { ...val, email: e.target.value };
+    });
+  };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    postLogin(email, password)
+    postLogin(formState.email, formState.password)
       .then((tokenResponse) => {
         const token = tokenResponse.token;
         populateStorage('token', token);
-        loginCallback(token);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -33,8 +44,8 @@ export default function Login() {
           className="login_input"
           name="email"
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={formState.email}
+          onChange={handleEmailChange}
           autoFocus
         ></input>
         <label htmlFor="password">Password</label>
@@ -42,8 +53,8 @@ export default function Login() {
           className="login_input"
           name="password"
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formState.password}
+          onChange={handlePasswordChange}
         ></input>
         <button
           className="button"

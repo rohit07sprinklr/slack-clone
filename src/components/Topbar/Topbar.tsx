@@ -6,7 +6,7 @@ import './topbar.css';
 import { useUser } from '../UserProvider/UserProvider';
 
 export default function Topbar() {
-  const { user } = useUser();
+  const user = useUser();
   return (
     <div className="topbar">
       <div className="topbar_item topbar_item_left">
