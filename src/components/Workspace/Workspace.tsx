@@ -3,14 +3,7 @@ import MessageBox from '../MessageBox/MessageBox';
 import './workspace.css';
 import Bookmarks from '../Bookmarks/Bookmarks';
 import WorkspaceHeader from '../WorkspaceHeader/WorkspaceHeader';
-import {
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState
-} from 'react';
-import { WorkspaceContext } from '../Homepage/Homepage';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   getMessagesFromChannelID,
   getMessagesFromChatID,
@@ -19,9 +12,10 @@ import {
 import { MessageDataType } from '../../types/dataTypes';
 import { CHAT_TYPE } from '../../utils/constants';
 import Loader from '../Loader/Loader';
+import { useWorkspace } from '../WorkspaceProvider/WorkspaceProvider';
 
 export default function Workspace() {
-  const { selectedChatWindow } = useContext(WorkspaceContext);
+  const { selectedChatWindow } = useWorkspace();
   const [messageList, setMessageList] = useState<MessageDataType[]>([]);
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -66,6 +60,7 @@ export default function Workspace() {
         <WorkspaceHeader />
         <Bookmarks />
         <div className="chat_list_container" ref={containerRef}>
+          <div className="chat_list_header"></div>
           {showLoader ? (
             <div className="chat_list_loader">
               <Loader />

@@ -3,11 +3,10 @@ import Avatar from '../Avatar/Avatar';
 import HistoryButton from '../HistoryButton/HistoryButton';
 import SearchBar from '../SearchBar/SearchBar';
 import './topbar.css';
-import { UserContext } from '../Mainpage/Mainpage';
+import { useUser } from '../UserProvider/UserProvider';
 
 export default function Topbar() {
-  const { user } = useContext(UserContext);
-  console.log(user);
+  const { user } = useUser();
   return (
     <div className="topbar">
       <div className="topbar_item topbar_item_left">
@@ -19,7 +18,7 @@ export default function Topbar() {
       <div className="topbar_item topbar_item_right">
         {user ? (
           <button className="button" id="avatar_button">
-            <Avatar avatarSrc={user?.imageSrc} size="medium" />{' '}
+            <Avatar avatarSrc={user?.imageSrc} size="medium" />
           </button>
         ) : (
           <></>

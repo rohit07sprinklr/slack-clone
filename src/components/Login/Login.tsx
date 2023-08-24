@@ -1,12 +1,13 @@
-import { ReactEventHandler, useState } from 'react';
+import { useState } from 'react';
 import './login.css';
 import { postLogin } from '../../httpServices/httpService';
-import { UserDataType } from '../../types/dataTypes';
 import { populateStorage } from '../../utils/utils';
+import { useUser } from '../UserProvider/UserProvider';
 
-export default function Login(props: any) {
+export default function Login() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const { loginCallback } = useUser();
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -14,7 +15,7 @@ export default function Login(props: any) {
       .then((tokenResponse) => {
         const token = tokenResponse.token;
         populateStorage('token', token);
-        props.loginCallback(token);
+        loginCallback(token);
       })
       .catch((err) => {
         console.log(err);
