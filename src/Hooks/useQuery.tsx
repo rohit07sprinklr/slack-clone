@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 
-const useQuery = (queryFunction: any, skip?: boolean) => {
+const useQuery = (
+  queryFunction: (...args: any) => Promise<any>,
+  skip?: boolean
+) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<boolean>(false);
@@ -13,6 +16,7 @@ const useQuery = (queryFunction: any, skip?: boolean) => {
         setData(res);
         setLoading(false);
       } catch (e) {
+        setLoading(false);
         setError(true);
       }
     };

@@ -11,17 +11,18 @@ import ErrorPage from '../ErrorPage/ErrorPage';
 import './mainpage.css';
 
 //hooks
-import { useQuery } from '../Hooks/useQuery';
+import { useQuery } from '../../Hooks/useQuery';
 
 //utils
 import { getProfile } from '../../httpServices/httpService';
+import { AUTH_KEY } from '../../utils/constants';
 
 export default function Mainpage() {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
   const { loading, data, error } = useQuery(getProfile, authenticated);
 
   useEffect(() => {
-    if (getStorage('token')) {
+    if (getStorage(AUTH_KEY)) {
       setAuthenticated(true);
     }
     return () => {
@@ -35,13 +36,14 @@ export default function Mainpage() {
         <Loader />
       </div>
     );
-  } else if (error) {
-    return <ErrorPage />;
-  } else {
-    return (
-      <UserProvider user={data}>
-        {authenticated ? <Homepage /> : <Login />}
-      </UserProvider>
-    );
   }
+  if (error) {
+    return <ErrorPage />;
+  }
+
+  return (
+    <UserProvider user={data}>
+      {authenticated ? <Homepage /> : <Login />}
+    </UserProvider>
+  );
 }

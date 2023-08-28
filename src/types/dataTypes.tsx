@@ -25,3 +25,10 @@ export type UserDataType = {
   imageSrc: string;
   groups: number[];
 } | null;
+
+export type DirectChatProfileType = {
+  id: number;
+  name: string;
+  imageSrc: string;
+  groups: number[];
+};

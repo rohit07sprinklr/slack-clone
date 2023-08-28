@@ -1,9 +1,31 @@
-import './navbarMenu.css';
-import { useWorkspace } from '../WorkspaceProvider/WorkspaceProvider';
+//libs
 import { ReactElement, useState } from 'react';
+
+//components
 import Avatar from '../Avatar/Avatar';
 
-export function NavbarMenuList(props: any) {
+//hooks
+import { useWorkspace } from '../WorkspaceProvider/WorkspaceProvider';
+
+//styles
+import './navbarMenu.css';
+
+//types
+type NavbarMenuProps = {
+  title: string;
+  chatID: number;
+  chatType: number;
+  avatarSrc?: string;
+  IconElement?: ReactElement;
+};
+
+//types
+type NavbarMenuListProps = {
+  title: string;
+  children: any;
+};
+
+export function NavbarMenuList(props: NavbarMenuListProps) {
   const [MenuExpanded, setMenuExpanded] = useState<boolean>(true);
   const handleArrowClick = () => {
     setMenuExpanded((currVal) => !currVal);
@@ -24,13 +46,7 @@ export function NavbarMenuList(props: any) {
   );
 }
 
-export function NavbarMenu(props: {
-  title: string;
-  chatID: number;
-  chatType: number;
-  avatarSrc?: string;
-  IconElement?: ReactElement;
-}) {
+export function NavbarMenu(props: NavbarMenuProps) {
   const { selectedChatWindow, setSelectedChatWindow } = useWorkspace();
   return (
     <button

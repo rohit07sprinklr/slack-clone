@@ -1,5 +1,4 @@
-import { ArrowIconElement } from '../IconElement/ArrowIconElement';
-import { NewMessageIconElement } from '../IconElement/NewMessageIconElement';
+//styles
 import './navbarHeader.css';
 
 export default function NavbarHeader() {
@@ -7,10 +6,10 @@ export default function NavbarHeader() {
     <div className="navbar_header">
       <div className="button navbar_header_info">
         Workspace
-        <ArrowIconElement />
+        <img src="assets/icons/arrow-down-tr.svg" width="18" height="18" />
       </div>
       <button className="navbar_header_newButton">
-        <NewMessageIconElement />
+        <img src="assets/icons/new.svg" width="18" height="18" />
       </button>
     </div>
   );

@@ -1,7 +1,12 @@
+//libs
 import { ReactNode, createContext, useCallback, useContext } from 'react';
-import { UserDataType } from '../../types/dataTypes';
-import { deleteStorage, getStorage } from '../../utils/utils';
 
+//utils
+import { deleteStorage, getStorage } from '../../utils/utils';
+import { AUTH_KEY } from '../../utils/constants';
+
+//types
+import { UserDataType } from '../../types/dataTypes';
 type UserProviderProps = {
   children: ReactNode;
   user: UserDataType;
@@ -10,11 +15,6 @@ type UserProviderProps = {
 export const UserContext = createContext<UserDataType | undefined>(undefined);
 
 function UserProvider({ user, children }: UserProviderProps) {
-  const logoutCallback = useCallback(() => {
-    deleteStorage('token');
-    window.location.reload();
-  }, []);
-
   return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 }
 

@@ -1,7 +1,16 @@
+//components
 import DateChat from '../DateChat/dateChat';
-import { groupByDate } from '../../utils/utils';
 
-export default function ChatList(props: { messageList: any }) {
+//utils
+import { groupByDate } from '../../utils/utils';
+import { MessageDataType } from '../../types/dataTypes';
+
+//types
+type ChatListProps = {
+  messageList: MessageDataType[];
+};
+
+export default function ChatList(props: ChatListProps) {
   const groupedMessageList = groupByDate(props.messageList);
 
   return (
