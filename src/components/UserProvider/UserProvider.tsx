@@ -1,57 +1,21 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState
-} from 'react';
-import { UserContextType } from '../../types/contextTypes';
-import { UserDataType } from '../../types/dataTypes';
+//libs
+import { ReactNode, createContext, useCallback, useContext } from 'react';
+
+//utils
 import { deleteStorage, getStorage } from '../../utils/utils';
-import { getProfile } from '../../httpServices/httpService';
+import { AUTH_KEY } from '../../utils/constants';
 
-export const UserContext = createContext<UserContextType | undefined>(
-  undefined
-);
+//types
+import { UserDataType } from '../../types/dataTypes';
+type UserProviderProps = {
+  children: ReactNode;
+  user: UserDataType;
+};
 
-function UserProvider({ authenticateCallback, children }: any) {
-  const [user, setUser] = useState<UserDataType>(null);
+export const UserContext = createContext<UserDataType | undefined>(undefined);
 
-  const fetchAndPopulateProfileCallback = async () => {
-    const userData = await getProfile();
-    setUser(userData);
-  };
-  useEffect(() => {
-    if (getStorage('token')) {
-      fetchAndPopulateProfileCallback();
-      authenticateCallback(true);
-    }
-    return () => {
-      authenticateCallback(false);
-    };
-  }, []);
-
-  const loginCallback = useCallback(() => {
-    fetchAndPopulateProfileCallback();
-    authenticateCallback(true);
-  }, []);
-
-  const logoutCallback = useCallback(() => {
-    deleteStorage('token');
-    window.location.reload();
-  }, []);
-
-  return (
-    <UserContext.Provider
-      value={{
-        user,
-        logoutCallback,
-        loginCallback
-      }}
-    >
-      {children}
-    </UserContext.Provider>
-  );
+function UserProvider({ user, children }: UserProviderProps) {
+  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 }
 
 function useUser() {

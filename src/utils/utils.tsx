@@ -1,20 +1,24 @@
-export function populateStorage(feild: string, value: any) {
-  localStorage.setItem(feild, JSON.stringify(value));
+import { MessageDataType } from '../types/dataTypes';
+
+export function populateStorage(field: string, value: any) {
+  localStorage.setItem(field, JSON.stringify(value));
 }
-export function getStorage(feild: string): any {
-  const res = localStorage.getItem(feild);
+export function getStorage(field: string): any {
+  const res = localStorage.getItem(field);
   if (res) return JSON.parse(res);
   return null;
 }
-export function deleteStorage(feild: string) {
-  localStorage.removeItem(feild);
+export function deleteStorage(field: string) {
+  localStorage.removeItem(field);
 }
 
 export const getDateFromTimestamp = (timeStamp: number): string => {
   const dateTimeJS = new Date(timeStamp * 1000);
   return `${dateTimeJS.getDate()}-${dateTimeJS.getMonth()}-${dateTimeJS.getFullYear()}`;
 };
-export const groupByDate = (msgArr: any) => {
+export const groupByDate = (
+  msgArr: MessageDataType[]
+): { [key: string]: MessageDataType[] } => {
   return msgArr.reduce(
     (map: any, itm: any) => {
       const currDate = getDateFromTimestamp(itm.timestamp);

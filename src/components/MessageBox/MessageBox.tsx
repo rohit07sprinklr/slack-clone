@@ -1,13 +1,25 @@
-import { useContext, useState } from 'react';
+//libs
+import { useState } from 'react';
+
+//components
+import { useWorkspace } from '../WorkspaceProvider/WorkspaceProvider';
+
+//styles
 import './messageBox.css';
-import { MessageBoxPropType } from '../../types/propTypes';
+
+//utils
 import {
   postMessagesFromChannelID,
   postMessagesFromChatID,
   postMessagesFromGroupID
 } from '../../httpServices/httpService';
 import { CHAT_TYPE } from '../../utils/constants';
-import { useWorkspace } from '../WorkspaceProvider/WorkspaceProvider';
+
+//types
+import { MessageDataType } from '../../types/dataTypes';
+type MessageBoxPropType = {
+  updateMessageCallback: (message: MessageDataType) => void;
+};
 
 export default function MessageBox(props: MessageBoxPropType) {
   const { selectedChatWindow } = useWorkspace();
@@ -62,18 +74,12 @@ export default function MessageBox(props: MessageBoxPropType) {
           disabled={!textInput.length}
           onClick={handleSubmit}
         >
-          <svg
-            xmlnsXlink="http://www.w3.org/1999/xlink"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
+          <img
+            src="assets/icons/send.svg"
+            alt="send"
             width="20"
             height="20"
-          >
-            <path
-              fill="#1D1C1D"
-              d="M1.5 2.25a.755.755 0 0 1 1-.71l15.596 7.807a.73.73 0 0 1 0 1.306L2.5 18.46l-.076.018a.749.749 0 0 1-.924-.728v-4.54c0-1.21.97-2.229 2.21-2.25l6.54-.17c.27-.01.75-.24.75-.79s-.5-.79-.75-.79l-6.54-.17A2.253 2.253 0 0 1 1.5 6.789v-4.54Z"
-            ></path>
-          </svg>
+          ></img>
         </button>
       </div>
     </div>

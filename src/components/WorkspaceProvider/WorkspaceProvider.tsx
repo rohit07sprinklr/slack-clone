@@ -1,10 +1,18 @@
+//libs
 import { createContext, useContext, useEffect, useState } from 'react';
-import { ChatWindowDataType } from '../../types/dataTypes';
+
+//utils
 import {
   getChannelChat,
   getDirectChatProfiles,
   getGroupChat
 } from '../../httpServices/httpService';
+
+//types
+import {
+  ChatWindowDataType,
+  DirectChatProfileType
+} from '../../types/dataTypes';
 import { workspaceContextType } from '../../types/contextTypes';
 
 export const WorkspaceContext = createContext<workspaceContextType | undefined>(
@@ -12,7 +20,9 @@ export const WorkspaceContext = createContext<workspaceContextType | undefined>(
 );
 
 function WorkspaceProvider({ children }: any) {
-  const [directChatProfiles, setDirectChatProfiles] = useState([]);
+  const [directChatProfiles, setDirectChatProfiles] = useState<
+    DirectChatProfileType[]
+  >([]);
   const [groupChats, setGroupChats] = useState([]);
   const [channels, setChannels] = useState([]);
 

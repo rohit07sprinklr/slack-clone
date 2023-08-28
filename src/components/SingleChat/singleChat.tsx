@@ -1,7 +1,22 @@
-import { getTimeFromTimestamp } from '../../utils/utils';
+//components
 import Avatar from '../Avatar/Avatar';
+
+//utils
+import { getTimeFromTimestamp } from '../../utils/utils';
+
+//styles
 import './singleChat.css';
-export default function SingleChat(props: any) {
+
+//types
+type SingleChatProps = {
+  userID: number;
+  userName: string;
+  userAvatar: string;
+  text: string;
+  timestamp: number;
+};
+
+export default function SingleChat(props: SingleChatProps) {
   return (
     <div className="chat-message-container">
       <Avatar size={'large'} avatarSrc={props.userAvatar} />

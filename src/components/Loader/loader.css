@@ -5,8 +5,12 @@
   width: 30px;
   height: 30px;
   animation: spin 1s linear infinite;
+  align-self: center;
 }
-
+.sm {
+  width: 10px;
+  height: 10px;
+}
 /* Safari */
 @-webkit-keyframes spin {
   0% {

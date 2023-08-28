@@ -11,10 +11,10 @@ export function BrosweIconElement() {
     >
       <path
         fill="#FFFFFF"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M10 5.5A1.75 1.75 0 1 1 10 2a1.75 1.75 0 0 1 0 3.5Zm0 6.25a1.75 1.75 0 1 1 0-3.5 1.75 1.75 0 0 1 0 3.5Zm-1.75 4.5a1.75 1.75 0 1 0 3.5 0 1.75 1.75 0 0 0-3.5 0Z"
-        clip-rule="evenodd"
-        fill-opacity="0.7"
+        clipRule="evenodd"
+        fillOpacity="0.7"
       ></path>
     </svg>
   );

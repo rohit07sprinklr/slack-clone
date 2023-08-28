@@ -1,9 +1,15 @@
+//Components
 import { BrosweIconElement } from '../IconElement/BrowseIconElement';
 import { CanvasIconElement } from '../IconElement/CanvasIconElement';
 import { FilesIconElement } from '../IconElement/FilesIconElement';
+
+//styles
 import './quickAccess.css';
 
-function QuickAccessMenu(props: { title: string; svgComponent: any }) {
+//types
+type QuickAccessMenuProps = { title: string; svgComponent: any };
+
+function QuickAccessMenu(props: QuickAccessMenuProps) {
   return (
     <button className="button navbar_quick_access_menu">
       {props.svgComponent}

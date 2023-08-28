@@ -1,10 +1,15 @@
-import './NavbarChatList.css';
-import { useWorkspace } from '../WorkspaceProvider/WorkspaceProvider';
+//components
 import { NavbarMenuList, NavbarMenu } from '../NavbarMenu/NavbarMenu';
-import { CHAT_TYPE } from '../../utils/constants';
 import { ChannelIconElement } from '../IconElement/ChannelIconElement';
+import { useWorkspace } from '../WorkspaceProvider/WorkspaceProvider';
 
-export default function NavbarChatList(props: any) {
+//styles
+import './NavbarChatList.css';
+
+//utils
+import { CHAT_TYPE } from '../../utils/constants';
+
+export default function NavbarChatList() {
   const { directChatProfiles, groupChats, channels } = useWorkspace();
   return (
     <div className="navbar_chatList">

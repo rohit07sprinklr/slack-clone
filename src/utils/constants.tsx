@@ -4,7 +4,10 @@ export const DIRECT_CHATS = '/direct-chats';
 export const GROUP_CHATS = '/group-chats';
 export const CHANNEL_CHATS = '/channels';
 export const LOGIN = '/login';
+export const SIGNUP = '/signup';
 export const PROFILE = '/profile';
+
+export const AUTH_KEY = 'token';
 
 export const HTTP_METHODS = {
   GET: 'GET',
