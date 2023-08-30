@@ -1,5 +1,5 @@
 //libs
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 //utils
 import {
@@ -9,60 +9,82 @@ import {
 } from '../../httpServices/httpService';
 
 //types
+import { ChatWindowDataType } from '../../types/dataTypes';
 import {
-  ChatWindowDataType,
-  DirectChatProfileType
-} from '../../types/dataTypes';
-import { workspaceContextType } from '../../types/contextTypes';
+  workspaceContextType,
+  workspaceNavigatorContextType
+} from '../../types/contextTypes';
+import { useQuery } from '../../Hooks/useQuery';
 
 export const WorkspaceContext = createContext<workspaceContextType | undefined>(
   undefined
 );
 
+export const WorkspaceNavigatorContext = createContext<
+  workspaceNavigatorContextType | undefined
+>(undefined);
+
 function WorkspaceProvider({ children }: any) {
-  const [directChatProfiles, setDirectChatProfiles] = useState<
-    DirectChatProfileType[]
-  >([]);
-  const [groupChats, setGroupChats] = useState([]);
-  const [channels, setChannels] = useState([]);
+  const updateFunction = (
+    prevData: { id: number; [key: string]: any }[],
+    newData: { id: number; [key: string]: any },
+    type: string
+  ) => {
+    switch (type) {
+      case 'POST': {
+        return [...prevData, { ...newData }];
+      }
+      case 'PATCH': {
+        return [...prevData].map((data) =>
+          data.id === newData.id ? newData : data
+        );
+      }
+      default: {
+        throw Error('No methods defined for this type');
+      }
+    }
+  };
+  const { data: directChatProfiles, updateData: updateDirectChatProfiles } =
+    useQuery({
+      queryFunction: getDirectChatProfiles,
+      updateFunction: updateFunction,
+      enabled: true,
+      refetchProps: []
+    });
+  const { data: groupChats, updateData: updateGroupChats } = useQuery({
+    queryFunction: getGroupChat,
+    updateFunction: updateFunction,
+    enabled: true,
+    refetchProps: []
+  });
+  const { data: channels, updateData: updateChannelChats } = useQuery({
+    queryFunction: getChannelChat,
+    updateFunction: updateFunction,
+    enabled: true,
+    refetchProps: []
+  });
 
   const [selectedChatWindow, setSelectedChatWindow] =
     useState<ChatWindowDataType>(null);
 
-  useEffect(() => {
-    async function fetchDirectChatProfiles() {
-      const profiles = await getDirectChatProfiles();
-      setDirectChatProfiles(profiles['profiles']);
-    }
-    fetchDirectChatProfiles();
-  }, []);
-
-  useEffect(() => {
-    async function fetchGroupChats() {
-      const groups = await getGroupChat();
-      setGroupChats(groups['groups']);
-    }
-    fetchGroupChats();
-  }, []);
-
-  useEffect(() => {
-    async function fetchChannels() {
-      const channels = await getChannelChat();
-      setChannels(channels['channels']);
-    }
-    fetchChannels();
-  }, []);
   return (
     <WorkspaceContext.Provider
       value={{
-        selectedChatWindow,
         directChatProfiles,
         channels,
         groupChats,
-        setSelectedChatWindow
+        updateChannelChats,
+        updateGroupChats
       }}
     >
-      {children}
+      <WorkspaceNavigatorContext.Provider
+        value={{
+          selectedChatWindow,
+          setSelectedChatWindow
+        }}
+      >
+        {children}
+      </WorkspaceNavigatorContext.Provider>
     </WorkspaceContext.Provider>
   );
 }
@@ -75,4 +97,12 @@ function useWorkspace() {
   return context;
 }
 
-export { WorkspaceProvider, useWorkspace };
+function useWorkspaceNavigator() {
+  const context = useContext(WorkspaceNavigatorContext);
+  if (context === undefined) {
+    throw new Error('useCount must be used within a CountProvider');
+  }
+  return context;
+}
+
+export { WorkspaceProvider, useWorkspace, useWorkspaceNavigator };

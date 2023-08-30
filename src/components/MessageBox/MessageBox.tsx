@@ -2,7 +2,10 @@
 import { useState } from 'react';
 
 //components
-import { useWorkspace } from '../WorkspaceProvider/WorkspaceProvider';
+import {
+  useWorkspace,
+  useWorkspaceNavigator
+} from '../WorkspaceProvider/WorkspaceProvider';
 
 //styles
 import './messageBox.css';
@@ -22,7 +25,7 @@ type MessageBoxPropType = {
 };
 
 export default function MessageBox(props: MessageBoxPropType) {
-  const { selectedChatWindow } = useWorkspace();
+  const { selectedChatWindow } = useWorkspaceNavigator();
   const [textAreaActive, setTextAreaActive] = useState<boolean>(false);
   const [textInput, setTextInput] = useState<string>('');
 

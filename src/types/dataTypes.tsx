@@ -7,8 +7,8 @@ export type ChatUser = {
 export type MessageDataType = {
   id: number;
   timestamp: number;
-  sendorId: 2;
-  recieverId: 1;
+  sendorId: number;
+  recieverId: number;
   text: string;
   sendorAvatarSrc: string;
   sendorName: string;
@@ -31,4 +31,12 @@ export type DirectChatProfileType = {
   name: string;
   imageSrc: string;
   groups: number[];
+};
+
+export type GroupType = {
+  id: number;
+  name: string;
+  type: number;
+  members: number[];
+  imageSrc: string;
 };

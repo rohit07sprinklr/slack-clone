@@ -1,0 +1,50 @@
+.member-list-container {
+  margin-top: 20px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: scroll;
+}
+.member-container {
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+}
+.member-desc {
+  display: flex;
+
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+}
+.member-container:hover {
+  background-color: #e0e0e0;
+}
+.member-list-desc {
+  color: grey;
+  font-weight: 500;
+  font-size: 13px;
+  padding: 3px 0px;
+}
+.member-selection-button {
+  height: 18px;
+  width: 18px;
+}
+#add-member-button {
+  color: black;
+  bottom: 0;
+  align-self: center;
+  background: green;
+  color: white;
+  font-size: 15px;
+  padding: 5px 10px;
+}
+#add-member-button[disabled] {
+  background: gray;
+}
+#add-member-button:hover {
+  transform: scale(1.03);
+}

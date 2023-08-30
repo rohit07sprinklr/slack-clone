@@ -13,8 +13,12 @@ export default function NavbarChatList() {
   const { directChatProfiles, groupChats, channels } = useWorkspace();
   return (
     <div className="navbar_chatList">
-      <NavbarMenuList title={'Channels'} key={1}>
-        {channels.map((channel: any) => (
+      <NavbarMenuList
+        title={'Channels'}
+        key={CHAT_TYPE.CHANNEL}
+        typeID={CHAT_TYPE.CHANNEL}
+      >
+        {channels?.map((channel: any) => (
           <NavbarMenu
             key={channel.id}
             title={channel.name}
@@ -25,8 +29,12 @@ export default function NavbarChatList() {
         ))}
       </NavbarMenuList>
 
-      <NavbarMenuList title={'Direct Messages'} key={2}>
-        {directChatProfiles.map((profile: any) => (
+      <NavbarMenuList
+        title={'Direct Messages'}
+        key={CHAT_TYPE.DIRECT}
+        typeID={CHAT_TYPE.DIRECT}
+      >
+        {directChatProfiles?.map((profile: any) => (
           <NavbarMenu
             key={profile.id}
             title={profile.name}
@@ -37,8 +45,12 @@ export default function NavbarChatList() {
         ))}
       </NavbarMenuList>
 
-      <NavbarMenuList title={'Group Messages'} key={3}>
-        {groupChats.map((chat: any) => (
+      <NavbarMenuList
+        title={'Group Messages'}
+        key={CHAT_TYPE.GROUP}
+        typeID={CHAT_TYPE.GROUP}
+      >
+        {groupChats?.map((chat: any) => (
           <NavbarMenu
             key={chat.id}
             title={chat.name}

@@ -1,5 +1,5 @@
 //components
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 //style
 import './login.css';
@@ -23,7 +23,7 @@ type LoginErrorStateType = {
   email: boolean;
   password: boolean;
 };
-type SignupErrorStateType = LoginErrorStateType & { name: string };
+type SignupErrorStateType = LoginErrorStateType & { name: boolean };
 
 function SignupForm(props: FormProps) {
   const [formState, setFormState] = useState<SignupFormStateType>({
@@ -31,6 +31,12 @@ function SignupForm(props: FormProps) {
     password: '',
     name: ''
   });
+  const [formError, setFormError] = useState<SignupErrorStateType>({
+    email: false,
+    password: false,
+    name: false
+  });
+  const [error, setError] = useState<string | null>(null);
 
   const handlePasswordChange = (e: any) => {
     setFormState((val) => {
@@ -49,17 +55,29 @@ function SignupForm(props: FormProps) {
   };
 
   const validateFunction = () => {
-    return Object.entries(formState).some(
-      ([key, value]) => value.trim().length === 0
-    );
+    let validationFlag = true;
+    Object.entries(formState).forEach(([key, value]) => {
+      if (value.trim().length === 0) {
+        setFormError((val) => ({ ...val, [key]: true }));
+        validationFlag = false;
+      }
+    });
+    return validationFlag;
   };
+  const handleInputFocus = useCallback(() => {
+    setError(null);
+    Object.entries(formState).forEach(([key, value]) => {
+      setFormError((val) => ({ ...val, [key]: false }));
+    });
+  }, []);
 
   const handleToggleClick = () => {
     props.toggleFormCallback();
   };
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    if (validateFunction()) return;
+    if (!validateFunction()) return;
     postSignup(formState.email, formState.password, formState.name)
       .then((tokenResponse) => {
         const token = tokenResponse.token;
@@ -67,7 +85,7 @@ function SignupForm(props: FormProps) {
         window.location.reload();
       })
       .catch((err) => {
-        console.log(err);
+        setError(err.message);
       });
   };
 
@@ -81,6 +99,8 @@ function SignupForm(props: FormProps) {
         label="Name"
         value={formState.name}
         handleChange={handleNameChange}
+        error={formError.name}
+        onFocus={handleInputFocus}
         autoFocus
       />
       <Input
@@ -88,13 +108,25 @@ function SignupForm(props: FormProps) {
         value={formState.email}
         handleChange={handleEmailChange}
         type="email"
+        error={formError.email}
+        onFocus={handleInputFocus}
       />
       <Input
         label="Password"
         value={formState.password}
         handleChange={handlePasswordChange}
+        onFocus={handleInputFocus}
+        error={formError.password}
         type="password"
       />
+      {error ? (
+        <div className="error-container">
+          <img src="assets/icons/warning.svg" className="error-icon" />
+          {error}
+        </div>
+      ) : (
+        <></>
+      )}
       <button
         className="button"
         id="login_submit"
@@ -106,8 +138,8 @@ function SignupForm(props: FormProps) {
       <span id="login-form-footer">
         <span id="toggle-login" onClick={handleToggleClick}>
           <u>Sign In</u>
-        </span>{' '}
-        instead
+        </span>
+        Instead
       </span>
     </form>
   );
@@ -122,6 +154,7 @@ function LoginForm(props: FormProps) {
     email: false,
     password: false
   });
+  const [error, setError] = useState<string | null>(null);
 
   const handlePasswordChange = (e: any) => {
     setFormState((val) => {
@@ -138,17 +171,25 @@ function LoginForm(props: FormProps) {
     props.toggleFormCallback();
   };
   const validateFunction = () => {
+    let validationFlag = true;
     Object.entries(formState).forEach(([key, value]) => {
       if (value.trim().length === 0) {
         setFormError((val) => ({ ...val, [key]: true }));
-        return true;
+        validationFlag = false;
       }
     });
-    return false;
+    return validationFlag;
   };
+  const handleInputFocus = useCallback(() => {
+    setError(null);
+    Object.entries(formState).forEach(([key, value]) => {
+      setFormError((val) => ({ ...val, [key]: false }));
+    });
+  }, []);
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    if (validateFunction()) return;
+    if (!validateFunction()) return;
     postLogin(formState.email, formState.password)
       .then((tokenResponse) => {
         const token = tokenResponse.token;
@@ -156,7 +197,7 @@ function LoginForm(props: FormProps) {
         window.location.reload();
       })
       .catch((err) => {
-        console.log(err);
+        setError(err.message);
       });
   };
 
@@ -172,6 +213,7 @@ function LoginForm(props: FormProps) {
         handleChange={handleEmailChange}
         type="email"
         error={formError.email}
+        onFocus={handleInputFocus}
         autoFocus
       />
       <Input
@@ -179,8 +221,17 @@ function LoginForm(props: FormProps) {
         value={formState.password}
         handleChange={handlePasswordChange}
         type="password"
+        onFocus={handleInputFocus}
         error={formError.password}
       />
+      {error ? (
+        <div className="error-container">
+          <img src="assets/icons/warning.svg" className="error-icon" />
+          {error}
+        </div>
+      ) : (
+        <></>
+      )}
       <button
         className="button"
         id="login_submit"

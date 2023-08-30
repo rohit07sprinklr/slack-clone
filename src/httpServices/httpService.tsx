@@ -40,6 +40,10 @@ async function postLogin(email: string, password: string) {
       'Content-Type': 'application/json'
     }
   });
+  if (!responses.ok) {
+    const error = await responses.text();
+    throw Error(error);
+  }
   const result = await responses.json();
   return result;
 }
@@ -58,6 +62,10 @@ async function postSignup(email: string, password: string, name: string) {
       'Content-Type': 'application/json'
     }
   });
+  if (!responses.ok) {
+    const error = await responses.text();
+    throw Error(error);
+  }
   const result = await responses.json();
   return result;
 }
@@ -67,6 +75,10 @@ async function getProfile() {
     method: HTTP_METHODS.GET
   };
   const responses = await fetcher(BASE_URL + PROFILE, requestParams);
+  if (!responses.ok) {
+    const error = await responses.text();
+    throw Error(error);
+  }
   const result = await responses.json();
   return result;
 }
@@ -76,8 +88,12 @@ async function getDirectChatProfiles() {
     method: HTTP_METHODS.GET
   };
   const responses = await fetcher(BASE_URL + DIRECT_CHATS, requestParams);
+  if (!responses.ok) {
+    const error = await responses.text();
+    throw Error(error);
+  }
   const result = await responses.json();
-  return result;
+  return result['profiles'];
 }
 
 async function getGroupChat() {
@@ -85,6 +101,23 @@ async function getGroupChat() {
     method: HTTP_METHODS.GET
   };
   const responses = await fetcher(BASE_URL + GROUP_CHATS, requestParams);
+  if (!responses.ok) {
+    const error = await responses.text();
+    throw Error(error);
+  }
+  const result = await responses.json();
+  return result['groups'];
+}
+async function postGroupChat(groupName: string) {
+  const requestParams = {
+    method: HTTP_METHODS.POST,
+    body: JSON.stringify({ name: groupName })
+  };
+  const responses = await fetcher(BASE_URL + GROUP_CHATS, requestParams);
+  if (!responses.ok) {
+    const error = await responses.text();
+    throw Error(error);
+  }
   const result = await responses.json();
   return result;
 }
@@ -93,42 +126,80 @@ async function getChannelChat() {
     method: HTTP_METHODS.GET
   };
   const responses = await fetcher(BASE_URL + CHANNEL_CHATS, requestParams);
+  if (!responses.ok) {
+    const error = await responses.text();
+    throw Error(error);
+  }
+  const result = await responses.json();
+  return result['channels'];
+}
+async function postChannelChat(channelName: string) {
+  const requestParams = {
+    method: HTTP_METHODS.POST,
+    body: JSON.stringify({ name: channelName })
+  };
+  const responses = await fetcher(BASE_URL + CHANNEL_CHATS, requestParams);
+  if (!responses.ok) {
+    const error = await responses.text();
+    throw Error(error);
+  }
   const result = await responses.json();
   return result;
 }
 
-async function getMessagesFromChatID(chatID: number) {
+async function getMessagesFromChatID(
+  chatID: number | undefined,
+  messageCount: number
+) {
   const requestParams = {
     method: HTTP_METHODS.GET
   };
   const responses = await fetcher(
-    BASE_URL + DIRECT_CHATS + `/${chatID}`,
+    BASE_URL + DIRECT_CHATS + `/${chatID}?limit=${messageCount}`,
     requestParams
   );
+  if (!responses.ok) {
+    const error = await responses.text();
+    throw Error(error);
+  }
   const result = await responses.json();
-  return result;
+  return { data: result['messages'], pageLimit: result['pageLimit'] };
 }
-async function getMessagesFromChannelID(chatID: number) {
+async function getMessagesFromChannelID(
+  chatID: number | undefined,
+  messageCount: number
+) {
   const requestParams = {
     method: HTTP_METHODS.GET
   };
   const responses = await fetcher(
-    BASE_URL + CHANNEL_CHATS + `/${chatID}`,
+    BASE_URL + CHANNEL_CHATS + `/${chatID}?limit=${messageCount}`,
     requestParams
   );
+  if (!responses.ok) {
+    const error = await responses.text();
+    throw Error(error);
+  }
   const result = await responses.json();
-  return result;
+  return { data: result['messages'], pageLimit: result['pageLimit'] };
 }
-async function getMessagesFromGroupID(chatID: number) {
+async function getMessagesFromGroupID(
+  chatID: number | undefined,
+  messageCount: number
+) {
   const requestParams = {
     method: HTTP_METHODS.GET
   };
   const responses = await fetcher(
-    BASE_URL + GROUP_CHATS + `/${chatID}`,
+    BASE_URL + GROUP_CHATS + `/${chatID}?limit=${messageCount}`,
     requestParams
   );
+  if (!responses.ok) {
+    const error = await responses.text();
+    throw Error(error);
+  }
   const result = await responses.json();
-  return result;
+  return { data: result['messages'], pageLimit: result['pageLimit'] };
 }
 
 async function postMessagesFromChatID(chatID: number, text: string) {
@@ -140,6 +211,10 @@ async function postMessagesFromChatID(chatID: number, text: string) {
     BASE_URL + DIRECT_CHATS + `/${chatID}`,
     requestParams
   );
+  if (!responses.ok) {
+    const error = await responses.text();
+    throw Error(error);
+  }
   const result = await responses.json();
   return result;
 }
@@ -153,6 +228,10 @@ async function postMessagesFromChannelID(chatID: number, text: string) {
     BASE_URL + CHANNEL_CHATS + `/${chatID}`,
     requestParams
   );
+  if (!responses.ok) {
+    const error = await responses.text();
+    throw Error(error);
+  }
   const result = await responses.json();
   return result;
 }
@@ -166,6 +245,44 @@ async function postMessagesFromGroupID(chatID: number, text: string) {
     BASE_URL + GROUP_CHATS + `/${chatID}`,
     requestParams
   );
+  if (!responses.ok) {
+    const error = await responses.text();
+    throw Error(error);
+  }
+  const result = await responses.json();
+  return result;
+}
+
+async function patchGroup(chatID: number, members: number[]) {
+  const requestParams = {
+    method: HTTP_METHODS.PATCH,
+    body: JSON.stringify({ members: members })
+  };
+  const responses = await fetcher(
+    BASE_URL + GROUP_CHATS + `/${chatID}`,
+    requestParams
+  );
+  if (!responses.ok) {
+    const error = await responses.text();
+    throw Error(error);
+  }
+  const result = await responses.json();
+  return result;
+}
+
+async function patchChannel(chatID: number, members: number[]) {
+  const requestParams = {
+    method: HTTP_METHODS.PATCH,
+    body: JSON.stringify({ members: members })
+  };
+  const responses = await fetcher(
+    BASE_URL + CHANNEL_CHATS + `/${chatID}`,
+    requestParams
+  );
+  if (!responses.ok) {
+    const error = await responses.text();
+    throw Error(error);
+  }
   const result = await responses.json();
   return result;
 }
@@ -182,5 +299,9 @@ export {
   postMessagesFromGroupID,
   postLogin,
   getProfile,
-  postSignup
+  postSignup,
+  postGroupChat,
+  postChannelChat,
+  patchGroup,
+  patchChannel
 };
