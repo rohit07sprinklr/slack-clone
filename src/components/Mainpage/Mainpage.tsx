@@ -19,7 +19,11 @@ import { AUTH_KEY } from '../../utils/constants';
 
 export default function Mainpage() {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
-  const { loading, data, error } = useQuery(getProfile, authenticated);
+  const { loading, data, error } = useQuery({
+    queryFunction: getProfile,
+    enabled: authenticated,
+    refetchProps: [authenticated]
+  });
 
   useEffect(() => {
     if (getStorage(AUTH_KEY)) {

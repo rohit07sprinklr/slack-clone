@@ -9,6 +9,8 @@ export const PROFILE = '/profile';
 
 export const AUTH_KEY = 'token';
 
+export const FETCH_LIMIT = 12;
+
 export const HTTP_METHODS = {
   GET: 'GET',
   POST: 'POST',

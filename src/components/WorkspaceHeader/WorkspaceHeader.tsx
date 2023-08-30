@@ -1,11 +1,14 @@
 //libs
-import { useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 
 //components
 import Avatar from '../Avatar/Avatar';
 
 //hooks
-import { useWorkspace } from '../WorkspaceProvider/WorkspaceProvider';
+import {
+  useWorkspace,
+  useWorkspaceNavigator
+} from '../WorkspaceProvider/WorkspaceProvider';
 
 //utils
 import { CHAT_TYPE } from '../../utils/constants';
@@ -13,23 +16,29 @@ import { CHAT_TYPE } from '../../utils/constants';
 //types
 import { ChatUser } from '../../types/dataTypes';
 import { ChannelIconElement } from '../IconElement/ChannelIconElement';
+import { DialogModal } from '../AddMemberDialog/DialogModal';
+import { GroupMembers } from '../GroupMembers/GroupMembers';
 
-export default function WorkspaceHeader() {
-  const { selectedChatWindow, directChatProfiles, groupChats, channels } =
-    useWorkspace();
+const WorkspaceHeader = memo(() => {
+  const { selectedChatWindow } = useWorkspaceNavigator();
+  const { directChatProfiles, groupChats, channels } = useWorkspace();
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<ChatUser>({} as ChatUser);
 
   const getChatInfoFromID = () => {
-    const searchList =
-      selectedChatWindow?.type === CHAT_TYPE.DIRECT
-        ? directChatProfiles
-        : selectedChatWindow?.type === CHAT_TYPE.CHANNEL
-        ? channels
-        : groupChats;
-    const chatInfo = searchList.filter(
-      (itm: ChatUser) => itm.id === selectedChatWindow?.id
-    );
-    return chatInfo.length ? chatInfo[0] : { name: '' };
+    if (selectedChatWindow?.type === CHAT_TYPE.DIRECT) {
+      const chatInfo = directChatProfiles?.filter(
+        (itm: any) => itm.id === selectedChatWindow?.id
+      );
+      return chatInfo?.[0];
+    } else {
+      const searchList =
+        selectedChatWindow?.type === CHAT_TYPE.CHANNEL ? channels : groupChats;
+      const chatInfo = searchList?.filter(
+        (itm: any) => itm.id === selectedChatWindow?.id
+      );
+      return chatInfo?.[0];
+    }
   };
 
   useEffect(() => {
@@ -37,17 +46,60 @@ export default function WorkspaceHeader() {
     setCurrentUser(user);
   }, [selectedChatWindow, directChatProfiles]);
 
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+  const handleCloseDialog = useCallback(() => {
+    setDialogOpen(false);
+  }, []);
+
   return (
-    <div className="workspace_item">
-      <button className="button workspace_item_button">
-        {selectedChatWindow?.type === CHAT_TYPE.CHANNEL ? (
-          <ChannelIconElement width="18px" height="18px" theme="dark" />
+    <>
+      <div className="workspace_item">
+        <button className="button workspace_item_button">
+          {selectedChatWindow?.type === CHAT_TYPE.CHANNEL ? (
+            <ChannelIconElement width="18px" height="18px" theme="dark" />
+          ) : (
+            <Avatar avatarSrc={currentUser.imageSrc} size="medium" />
+          )}
+          {currentUser.name}
+          <img src="assets/icons/arrow-down-dark.svg" width="18" height="18" />
+        </button>
+        {selectedChatWindow?.type !== CHAT_TYPE.DIRECT ? (
+          <button
+            className="button workspace_item_button workspace_item_button_add"
+            onClick={handleOpenDialog}
+          >
+            <img
+              src="assets/icons/add.svg"
+              width="13"
+              height="13"
+              alt="add bookmark"
+            ></img>
+            Add Members
+          </button>
         ) : (
-          <Avatar avatarSrc={currentUser.imageSrc} size="medium" />
+          <></>
         )}
-        {currentUser.name}
-        <img src="assets/icons/arrow-down-dark.svg" width="18" height="18" />
-      </button>
-    </div>
+      </div>
+      <DialogModal
+        dialogOpen={dialogOpen}
+        title={
+          <div className="dialog-title">
+            {selectedChatWindow?.type === CHAT_TYPE.CHANNEL ? (
+              <ChannelIconElement width="25px" height="25px" theme="dark" />
+            ) : (
+              <Avatar avatarSrc={currentUser.imageSrc} size="large" />
+            )}
+            {currentUser.name}
+          </div>
+        }
+        closeDialog={handleCloseDialog}
+      >
+        <GroupMembers />
+      </DialogModal>
+    </>
   );
-}
+});
+
+export { WorkspaceHeader };

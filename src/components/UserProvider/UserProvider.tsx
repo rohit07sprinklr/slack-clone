@@ -1,10 +1,6 @@
 //libs
 import { ReactNode, createContext, useCallback, useContext } from 'react';
 
-//utils
-import { deleteStorage, getStorage } from '../../utils/utils';
-import { AUTH_KEY } from '../../utils/constants';
-
 //types
 import { UserDataType } from '../../types/dataTypes';
 type UserProviderProps = {

@@ -1,8 +1,15 @@
+import {
+  getMessagesFromChannelID,
+  getMessagesFromChatID,
+  getMessagesFromGroupID
+} from '../httpServices/httpService';
 import { MessageDataType } from '../types/dataTypes';
+import { CHAT_TYPE } from './constants';
 
 export function populateStorage(field: string, value: any) {
   localStorage.setItem(field, JSON.stringify(value));
 }
+
 export function getStorage(field: string): any {
   const res = localStorage.getItem(field);
   if (res) return JSON.parse(res);
@@ -48,7 +55,7 @@ export function formatDate(inputDate: string) {
 
   const parts = inputDate.split('-');
   const day = parseInt(parts[0]);
-  const monthIndex = parseInt(parts[1]) - 1; // Months are zero-indexed
+  const monthIndex = parseInt(parts[1]) - 1;
   const year = parseInt(parts[2]);
 
   const dateObject = new Date(year, monthIndex, day);
@@ -83,4 +90,14 @@ export const getTimeFromTimestamp = (timestamp: number) => {
   const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
   const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
   return `${formattedHours}:${formattedMinutes} ${period}`;
+};
+
+export const getFetchFunctionFromTypeID = (typeID: number | undefined) => {
+  return typeID === CHAT_TYPE.DIRECT
+    ? getMessagesFromChatID
+    : typeID === CHAT_TYPE.CHANNEL
+    ? getMessagesFromChannelID
+    : typeID === CHAT_TYPE.GROUP
+    ? getMessagesFromGroupID
+    : async () => {};
 };
