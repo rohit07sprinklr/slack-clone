@@ -57,6 +57,12 @@
 #login_submit:hover {
   transform: scale(1.01);
 }
+#login_submit[disabled='disabled'],
+#login_submit:disabled {
+  cursor: progress;
+  background-color: #350d3682;
+}
+
 #toggle-login {
   cursor: pointer;
 }

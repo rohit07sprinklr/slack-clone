@@ -13,6 +13,7 @@ import { Input } from './Input';
 //types
 type FormProps = {
   toggleFormCallback: () => void;
+  handshakeLoading: boolean;
 };
 type LoginFormStateType = {
   email: string;
@@ -132,6 +133,7 @@ function SignupForm(props: FormProps) {
         id="login_submit"
         type="submit"
         onClick={handleSubmit}
+        disabled={props.handshakeLoading}
       >
         Sign Up
       </button>
@@ -237,6 +239,7 @@ function LoginForm(props: FormProps) {
         id="login_submit"
         type="submit"
         onClick={handleSubmit}
+        disabled={props.handshakeLoading}
       >
         Sign In
       </button>
