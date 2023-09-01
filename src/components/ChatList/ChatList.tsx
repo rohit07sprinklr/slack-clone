@@ -16,25 +16,33 @@ import { useInfiniteQuery } from '../../Hooks/useInfiniteQuery';
 import { getFetchFunctionFromTypeID, groupByDate } from '../../utils/utils';
 import { FETCH_LIMIT } from '../../utils/constants';
 import DateChat from '../DateChat/dateChat';
+import { MessageDataType } from '../../types/dataTypes';
 
 export default function ChatList() {
   const { selectedChatWindow } = useWorkspaceNavigator();
   const [lastMessageId, setLastMessageId] = useState<number | undefined>();
+  const [lastScrollHeight, setLastScrollHeight] = useState<number>(0);
 
   const [fetchMessageCount, setFetchMessageCount] =
     useState<number>(FETCH_LIMIT);
-  const updateFunction = (prevData: any, newData: any) => [
-    ...prevData,
-    { ...newData }
-  ];
+  const updateFunction = (
+    prevData: MessageDataType[],
+    newData: MessageDataType
+  ) => [...prevData, { ...newData }];
   const queryFunction = getFetchFunctionFromTypeID(selectedChatWindow?.type);
+  const refreshFunction = (
+    prevData: MessageDataType[],
+    newData: MessageDataType[]
+  ) => !(prevData?.at(-1)?.id === newData?.at(-1)?.id);
 
   const { loading, data, error, updateData, pageLimit } = useInfiniteQuery({
     queryFunction: async () =>
       queryFunction(selectedChatWindow?.id, fetchMessageCount),
     page: fetchMessageCount,
-    updateFunction: updateFunction,
-    refetchProps: [selectedChatWindow]
+    updateFunction,
+    refetchProps: [selectedChatWindow],
+    refreshInterval: 4000,
+    refreshFunction
   });
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -51,6 +59,14 @@ export default function ChatList() {
       element?.removeEventListener('scroll', handleScroll);
     };
   });
+
+  useLayoutEffect(() => {
+    if (containerRef.current?.scrollHeight) {
+      containerRef.current.scrollTop =
+        containerRef.current.scrollHeight - lastScrollHeight - 10;
+      setLastScrollHeight(containerRef.current.scrollHeight);
+    }
+  }, [data?.length]);
 
   useLayoutEffect(() => {
     if (containerRef.current?.scrollHeight) {

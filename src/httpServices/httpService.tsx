@@ -26,6 +26,23 @@ async function fetcher(url: string, params: any) {
   return fetch(url, options);
 }
 
+async function getHandshake() {
+  const requestParams = {
+    method: HTTP_METHODS.GET
+  };
+  const headers = new Headers();
+  const responses = await fetch(BASE_URL, {
+    ...requestParams,
+    headers: {
+      ...headers,
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  });
+  const result = await responses.text();
+  return result;
+}
+
 async function postLogin(email: string, password: string) {
   const requestParams = {
     method: HTTP_METHODS.POST,
@@ -303,5 +320,6 @@ export {
   postGroupChat,
   postChannelChat,
   patchGroup,
-  patchChannel
+  patchChannel,
+  getHandshake
 };
