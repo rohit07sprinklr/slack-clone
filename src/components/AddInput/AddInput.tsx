@@ -4,12 +4,17 @@ import { postGroupChat } from '../../httpServices/httpService';
 import { useWorkspace } from '../WorkspaceProvider/WorkspaceProvider';
 import Loader from '../Loader/Loader';
 
+//prop onSubmit
+//define handleSubmit
+
+//onCancel
 type AddInputProps = {
   closeInput: () => void;
   handleInputSubmit: (name: string) => Promise<any>;
 };
-export const AddInput = (props: AddInputProps) => {
+export const AddInput = ({handleSubmit, ...restProps}: AddInputProps) => {
   const [value, setValue] = useState<string>('');
+  //loading
   const [loader, setLoader] = useState<boolean>(false);
   const handleChange = (e: any) => {
     setValue(e.target.value);
@@ -17,7 +22,7 @@ export const AddInput = (props: AddInputProps) => {
   const handleConfirmClick = async () => {
     if (value.trim().length === 0) return;
     setLoader(true);
-    await props.handleInputSubmit(value);
+    await handleSubmit(value);
     setLoader(false);
     props.closeInput();
   };
@@ -42,7 +47,7 @@ export const AddInput = (props: AddInputProps) => {
           <button className="button" onClick={handleConfirmClick}>
             <img src="assets/icons/tick.svg" width={17} height={15} />
           </button>
-          <button className="button" onClick={handleCancelClick}>
+          <button {...restProps} handleSubmit={handleSubmit} className="button" onClick={handleCancelClick}>
             X
           </button>
         </>

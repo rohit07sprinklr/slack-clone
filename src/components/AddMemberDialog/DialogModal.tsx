@@ -1,12 +1,21 @@
+//categorize types
+
+//libs
 import { createPortal } from 'react-dom';
-import './dialogModal.css';
 import { ReactNode } from 'react';
+
+//css
+import './dialogModal.css';
+
 type DialogModalProps = {
-  dialogOpen: boolean;
+  isOpen: boolean;
   title: ReactNode;
   closeDialog: () => void;
   children: any;
 };
+
+//move inside workspace header
+//fix props everywhere
 export function DialogModal(props: DialogModalProps) {
   const rootElm = document.getElementsByClassName('App')[0];
   const handleClose = () => {
