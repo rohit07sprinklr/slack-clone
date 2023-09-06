@@ -23,6 +23,7 @@ const useInfiniteQuery = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<boolean>(false);
+  //totalCount
   const [pageLimit, setPageLimit] = useState<number>(0);
 
   // const dataRef = useRef(null);
@@ -62,33 +63,10 @@ const useInfiniteQuery = ({
     };
   }, [page, data, refreshInterval, ...refetchProps]);
 
-  // useEffect(() => {
-  //   const refetchQueryFunction = async () => {
-  //     const res = await queryFunction();
-  //     if (refreshFunction && refreshFunction(dataRef.current, res.data)) {
-  //       console.log(dataRef.current);
-  //       setData(res.data);
-  //       setPageLimit(res.pageLimit);
-  //     }
-  //     intervalRef.current = setTimeout(refetchQueryFunction, refreshInterval);
-  //   };
-
-  //   if (refreshInterval) {
-  //     refetchQueryFunction();
-  //   }
-  //   return () => {
-  //     intervalRef.current ? clearTimeout(intervalRef.current) : {};
-  //   };
-  // }, [page, data, refreshInterval, ...refetchProps]);
 
   const updateData = async (newData: any) => {
-    if (updateFunction) {
-      setLoading(true);
-      setData((data: any) => updateFunction(data, newData));
-      setLoading(false);
-    } else {
-      throw Error('No Update Function Defined');
-    }
+      //remove
+      setData(newData);
   };
 
   return { loading, data, error, updateData, pageLimit };

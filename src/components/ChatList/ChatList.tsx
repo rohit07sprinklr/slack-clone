@@ -50,7 +50,7 @@ export default function ChatList() {
     const element = containerRef.current;
     const handleScroll = () => {
       if (element?.scrollTop === 0) {
-        if (pageLimit && pageLimit > fetchMessageCount)
+        if (totalCount && totalCount > fetchMessageCount)
           setFetchMessageCount((count) => count + FETCH_LIMIT);
       }
     };
