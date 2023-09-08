@@ -1,4 +1,4 @@
-import { handleLogout } from '../Logout/Logout';
+import { handleLogout } from '../logout/Logout';
 import './errorpage.css';
 export default function ErrorPage() {
   return (

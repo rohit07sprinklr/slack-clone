@@ -9,8 +9,8 @@ export type workspaceContextType = {
   directChatProfiles: DirectChatProfileType[];
   groupChats: GroupType[];
   channels: GroupType[];
-  updateGroupChats: (arg: GroupType, type: string) => void;
-  updateChannelChats: (arg: GroupType, type: string) => void;
+  updateGroupChats: (arg: GroupType[]) => void;
+  updateChannelChats: (arg: GroupType[]) => void;
 };
 
 export type workspaceNavigatorContextType = {

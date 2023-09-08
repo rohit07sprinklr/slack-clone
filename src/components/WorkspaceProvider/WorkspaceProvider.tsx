@@ -1,5 +1,5 @@
 //libs
-import { createContext, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 
 //utils
 import {
@@ -8,13 +8,15 @@ import {
   getGroupChat
 } from '../../httpServices/httpService';
 
+//hooks
+import { useQuery } from '../../hooks/useQuery';
+
 //types
 import { ChatWindowDataType } from '../../types/dataTypes';
 import {
   workspaceContextType,
   workspaceNavigatorContextType
 } from '../../types/contextTypes';
-import { useQuery } from '../../Hooks/useQuery';
 
 export const WorkspaceContext = createContext<workspaceContextType | undefined>(
   undefined
@@ -25,43 +27,14 @@ export const WorkspaceNavigatorContext = createContext<
 >(undefined);
 
 function WorkspaceProvider({ children }: any) {
-  const updateFunction = (
-    prevData: { id: number; [key: string]: any }[],
-    newData: { id: number; [key: string]: any },
-    type: string
-  ) => {
-    switch (type) {
-      case 'POST': {
-        return [...prevData, { ...newData }];
-      }
-      case 'PATCH': {
-        return [...prevData].map((data) =>
-          data.id === newData.id ? newData : data
-        );
-      }
-      default: {
-        throw Error('No methods defined for this type');
-      }
-    }
-  };
-  const { data: directChatProfiles, updateData: updateDirectChatProfiles } =
-    useQuery({
-      queryFunction: getDirectChatProfiles,
-      updateFunction: updateFunction,
-      enabled: true,
-      refetchProps: []
-    });
+  const { data: directChatProfiles } = useQuery({
+    queryFunction: getDirectChatProfiles
+  });
   const { data: groupChats, updateData: updateGroupChats } = useQuery({
-    queryFunction: getGroupChat,
-    updateFunction: updateFunction,
-    enabled: true,
-    refetchProps: []
+    queryFunction: getGroupChat
   });
   const { data: channels, updateData: updateChannelChats } = useQuery({
-    queryFunction: getChannelChat,
-    updateFunction: updateFunction,
-    enabled: true,
-    refetchProps: []
+    queryFunction: getChannelChat
   });
 
   const [selectedChatWindow, setSelectedChatWindow] =

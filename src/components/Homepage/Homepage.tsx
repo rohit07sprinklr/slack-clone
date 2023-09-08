@@ -1,9 +1,10 @@
 //components
-import Workspace from '../Workspace/Workspace';
-import { WorkspaceProvider } from '../WorkspaceProvider/WorkspaceProvider';
-import Navbar from '../Navbar/Navbar';
-import Topbar from '../Topbar/Topbar';
+import Workspace from './workspace/Workspace';
+import { WorkspaceProvider } from '../workspaceProvider/WorkspaceProvider';
+import Navbar from './navbar/Navbar';
+import Topbar from './topbar/Topbar';
 
+//css
 import './homepage.css';
 
 export default function Homepage() {

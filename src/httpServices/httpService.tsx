@@ -1,3 +1,4 @@
+import { GroupType } from '../types/dataTypes';
 import {
   AUTH_KEY,
   BASE_URL,
@@ -125,7 +126,7 @@ async function getGroupChat() {
   const result = await responses.json();
   return result['groups'];
 }
-async function postGroupChat(groupName: string) {
+async function postGroupChat(groupName: string): Promise<GroupType> {
   const requestParams = {
     method: HTTP_METHODS.POST,
     body: JSON.stringify({ name: groupName })
@@ -150,7 +151,7 @@ async function getChannelChat() {
   const result = await responses.json();
   return result['channels'];
 }
-async function postChannelChat(channelName: string) {
+async function postChannelChat(channelName: string): Promise<GroupType> {
   const requestParams = {
     method: HTTP_METHODS.POST,
     body: JSON.stringify({ name: channelName })
