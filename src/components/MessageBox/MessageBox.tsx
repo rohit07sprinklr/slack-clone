@@ -58,6 +58,7 @@ export default function MessageBox(props: MessageBoxPropType) {
   return (
     <div className="message_container">
       <div
+      //--active
         className={'message_input_container '.concat(
           textAreaActive ? 'active' : ''
         )}

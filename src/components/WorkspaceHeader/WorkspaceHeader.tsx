@@ -23,34 +23,26 @@ const WorkspaceHeader = memo(() => {
   const { selectedChatWindow } = useWorkspaceNavigator();
   const { directChatProfiles, groupChats, channels } = useWorkspace();
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-  const [currentUser, setCurrentUser] = useState<ChatUser>({} as ChatUser);
 
-  const getChatInfoFromID = () => {
-    if (selectedChatWindow?.type === CHAT_TYPE.DIRECT) {
-      const chatInfo = directChatProfiles?.filter(
-        (itm: any) => itm.id === selectedChatWindow?.id
-      );
-      return chatInfo?.[0];
-    } else {
-      const searchList =
-        selectedChatWindow?.type === CHAT_TYPE.CHANNEL ? channels : groupChats;
-      const chatInfo = searchList?.filter(
-        (itm: any) => itm.id === selectedChatWindow?.id
-      );
-      return chatInfo?.[0];
-    }
-  };
-
-  useEffect(() => {
-    const user = getChatInfoFromID();
-    setCurrentUser(user);
-  }, [selectedChatWindow, directChatProfiles]);
+  const currentUser = useMemo(() =>  if (selectedChatWindow?.type === CHAT_TYPE.DIRECT) {
+    const chatInfo = directChatProfiles?.filter(
+      (itm: any) => itm.id === selectedChatWindow?.id
+    );
+    return chatInfo?.[0];
+  } else {
+    const searchList =
+      selectedChatWindow?.type === CHAT_TYPE.CHANNEL ? channels : groupChats;
+    const chatInfo = searchList?.filter(
+      (itm: any) => itm.id === selectedChatWindow?.id
+    );
+    return chatInfo?.[0];
+  });
 
   const handleOpenDialog = () => {
     setDialogOpen(true);
   };
   const handleCloseDialog = useCallback(() => {
-    setDialogOpen(false);
+    setDialogOpen(false);s
   }, []);
 
   return (

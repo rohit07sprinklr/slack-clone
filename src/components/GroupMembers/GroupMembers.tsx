@@ -20,15 +20,15 @@ export function GroupMembers() {
   const { selectedChatWindow } = useWorkspaceNavigator();
   const [selectedMembers, setSelectedMembers] = useState<number[]>([]);
   const [loader, setLoader] = useState<boolean>(false);
-  const getMemberList = () => {
-    const searchList =
-      selectedChatWindow?.type === CHAT_TYPE.CHANNEL ? channels : groupChats;
-    const groupInfo = searchList?.filter(
-      (itm: any) => itm.id === selectedChatWindow?.id
-    );
-    return groupInfo?.[0].members;
-  };
-  const memberList = getMemberList();
+
+  //memo
+  const memberList = useMemo(() => { const searchList =
+    selectedChatWindow?.type === CHAT_TYPE.CHANNEL ? channels : groupChats;
+  const groupInfo = searchList?.filter(
+    (itm: any) => itm.id === selectedChatWindow?.id
+  );
+  return groupInfo?.[0].members;}, []);
+  
   const handleSelectClick = (id: number) => {
     setSelectedMembers((val: number[]) => {
       return val.includes(id)

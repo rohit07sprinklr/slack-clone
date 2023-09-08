@@ -36,11 +36,11 @@ export default function ChatList() {
   ) => !(prevData?.at(-1)?.id === newData?.at(-1)?.id);
 
   const { loading, data, error, updateData, pageLimit } = useInfiniteQuery({
-    queryFunction: async () =>
-      queryFunction(selectedChatWindow?.id, fetchMessageCount),
+    //Fix this
+    queryFunction: useCallback(() => async () =>
+      queryFunction(selectedChatWindow?.id, fetchMessageCount), [selectedChatWindow]),
     page: fetchMessageCount,
     updateFunction,
-    refetchProps: [selectedChatWindow],
     refreshInterval: 4000,
     refreshFunction
   });

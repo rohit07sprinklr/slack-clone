@@ -12,6 +12,7 @@ type DateChatProps = {
   chatList: MessageDataType[];
 };
 
+
 export default function DateChat(props: DateChatProps) {
   return (
     <div className="date-chat-container">
@@ -31,7 +32,7 @@ export default function DateChat(props: DateChatProps) {
       {props.chatList.map((chat: MessageDataType) => (
         <SingleChat
           key={chat.id}
-          userID={chat.sendorId}
+          userId={chat.sendorId}
           userName={chat.sendorName}
           userAvatar={chat.sendorAvatarSrc}
           text={chat.text}

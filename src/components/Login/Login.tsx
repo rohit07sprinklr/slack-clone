@@ -7,11 +7,10 @@ import { useQuery } from '../../Hooks/useQuery';
 import { getHandshake } from '../../httpServices/httpService';
 
 export default function Login() {
-  const [formSwitch, setformSwitch] = useState<boolean>(true);
+  const [formType, setFormType] = useState<boolean>(true);
   const { loading, error } = useQuery({
     queryFunction: getHandshake,
-    enabled: true,
-    refetchProps: [formSwitch]
+    enabled: true
   });
   const toggleFormCallback = useCallback(() => {
     setformSwitch((state) => !state);
