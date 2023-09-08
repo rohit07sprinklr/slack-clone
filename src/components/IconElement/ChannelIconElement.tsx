@@ -1,17 +1,21 @@
-export function ChannelIconElement(props: {
+export function ChannelIconElement({
+  width,
+  height,
+  theme
+}: {
   width?: string;
   height?: string;
   theme?: string;
 }) {
-  return props.theme === 'dark' ? (
+  return theme === 'dark' ? (
     <svg
       xmlnsXlink="http://www.w3.org/1999/xlink"
       xmlns="http://www.w3.org/2000/svg"
       data-1qi="true"
       aria-hidden="true"
       viewBox="0 0 20 20"
-      width={props.width || '16px'}
-      height={props.height || '16px'}
+      width={width || '16px'}
+      height={height || '16px'}
     >
       <path
         fill="#1D1C1D"
@@ -29,8 +33,8 @@ export function ChannelIconElement(props: {
       data-qa="sidebar-channel-icon-prefix"
       data-sidebar-channel-icon="channel"
       viewBox="0 0 20 20"
-      width={props.width || '16px'}
-      height={props.height || '16px'}
+      width={width || '16px'}
+      height={height || '16px'}
     >
       <path
         fill="#FFFFFF"

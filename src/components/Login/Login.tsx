@@ -3,21 +3,20 @@ import { useCallback, useState } from 'react';
 
 //components
 import { LoginForm, SignupForm } from './Form';
-import { useQuery } from '../../Hooks/useQuery';
+import { useQuery } from '../../hooks/useQuery';
 import { getHandshake } from '../../httpServices/httpService';
 
 export default function Login() {
-  const [formType, setFormType] = useState<boolean>(true);
+  const [formType, setformType] = useState<boolean>(true);
   const { loading, error } = useQuery({
-    queryFunction: getHandshake,
-    enabled: true
+    queryFunction: getHandshake
   });
   const toggleFormCallback = useCallback(() => {
-    setformSwitch((state) => !state);
+    setformType((state) => !state);
   }, []);
   return (
     <div className="login_container">
-      {formSwitch ? (
+      {formType ? (
         <LoginForm
           toggleFormCallback={toggleFormCallback}
           handshakeLoading={loading || error}

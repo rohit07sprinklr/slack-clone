@@ -4,17 +4,10 @@ import { useEffect, useState } from 'react';
 //type
 type useQueryType = {
   queryFunction: (...args: any) => Promise<any>;
-  enabled: any;
-  updateFunction?: (...args: any) => any;
-  refetchProps: any[];
+  skip?: any;
 };
 
-const useQuery = ({
-  queryFunction,
-  updateFunction,
-  enabled,
-  refetchProps
-}: useQueryType) => {
+const useQuery = ({ queryFunction, skip = false }: useQueryType) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<boolean>(false);
@@ -31,19 +24,13 @@ const useQuery = ({
         setError(true);
       }
     };
-    if (enabled) {
+    if (!skip) {
       callQueryFunction(queryFunction);
     }
-  }, [...refetchProps]);
+  }, [skip, queryFunction]);
 
-  const updateData = async (newData: any, type: string) => {
-    if (updateFunction) {
-      setLoading(true);
-      setData((data: any) => updateFunction(data, newData, type));
-      setLoading(false);
-    } else {
-      throw Error('No Update Function Defined');
-    }
+  const updateData = async (newData: any) => {
+    setData(newData);
   };
 
   return { loading, data, error, updateData };

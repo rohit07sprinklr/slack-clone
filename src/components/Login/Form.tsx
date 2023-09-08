@@ -1,14 +1,16 @@
-//components
+//libs
 import { useCallback, useState } from 'react';
 
-//style
+//components
+import { Input } from './Input';
+
+//css
 import './login.css';
 
 //utils
 import { postLogin, postSignup } from '../../httpServices/httpService';
 import { populateStorage } from '../../utils/utils';
 import { AUTH_KEY } from '../../utils/constants';
-import { Input } from './Input';
 
 //types
 type FormProps = {
@@ -26,7 +28,7 @@ type LoginErrorStateType = {
 };
 type SignupErrorStateType = LoginErrorStateType & { name: boolean };
 
-function SignupForm(props: FormProps) {
+function SignupForm({ toggleFormCallback, handshakeLoading }: FormProps) {
   const [formState, setFormState] = useState<SignupFormStateType>({
     email: '',
     password: '',
@@ -73,7 +75,7 @@ function SignupForm(props: FormProps) {
   }, []);
 
   const handleToggleClick = () => {
-    props.toggleFormCallback();
+    toggleFormCallback();
   };
 
   const handleSubmit = (e: any) => {
@@ -133,7 +135,7 @@ function SignupForm(props: FormProps) {
         id="login_submit"
         type="submit"
         onClick={handleSubmit}
-        disabled={props.handshakeLoading}
+        disabled={handshakeLoading}
       >
         Sign Up
       </button>
@@ -147,7 +149,7 @@ function SignupForm(props: FormProps) {
   );
 }
 
-function LoginForm(props: FormProps) {
+function LoginForm({ toggleFormCallback, handshakeLoading }: FormProps) {
   const [formState, setFormState] = useState<LoginFormStateType>({
     email: '',
     password: ''
@@ -170,7 +172,7 @@ function LoginForm(props: FormProps) {
   };
 
   const handleToggleClick = () => {
-    props.toggleFormCallback();
+    toggleFormCallback();
   };
   const validateFunction = () => {
     let validationFlag = true;
@@ -239,7 +241,7 @@ function LoginForm(props: FormProps) {
         id="login_submit"
         type="submit"
         onClick={handleSubmit}
-        disabled={props.handshakeLoading}
+        disabled={handshakeLoading}
       >
         Sign In
       </button>

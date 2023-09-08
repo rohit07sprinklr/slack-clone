@@ -1,10 +1,11 @@
+//css
 import './loader.css';
 
+//types
 type LoaderProps = {
   size?: string;
 };
-export default function Loader(props: LoaderProps) {
-  return (
-    <div className={props.size ? 'loader '.concat(props.size) : 'loader'}></div>
-  );
+
+export default function Loader({ size }: LoaderProps) {
+  return <div className={size ? 'loader '.concat(size) : 'loader'}></div>;
 }
