@@ -1,0 +1,18 @@
+.avatar-container {
+  object-fit: cover;
+}
+.--large {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+}
+.--small {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+.--medium {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+}

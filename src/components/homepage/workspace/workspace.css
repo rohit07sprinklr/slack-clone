@@ -1,0 +1,73 @@
+.workspace {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: white;
+  .workspace_item {
+    /* height: 30px; */
+    display: flex;
+    padding: 10px 15px;
+    border-bottom: 1px solid #0000001f;
+    justify-content: space-between;
+    .workspace_item_button {
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+      color: black !important;
+      font-size: 18px;
+      font-weight: 800;
+      gap: 5px;
+    }
+    .workspace_item_button:hover {
+      background-color: rgb(240, 240, 240);
+    }
+    .workspace_item_button_add {
+      color: grey !important;
+      font-weight: 500;
+      font-size: 13px;
+      gap: 5px;
+    }
+  }
+  .workspace_item_bookmark {
+    padding: 3px 15px;
+  }
+}
+.chat_list_header {
+  flex: 1;
+}
+.chat_list_container {
+  flex: 1;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  margin-bottom: 10px;
+}
+.chat_list_loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* height: 100%; */
+}
+
+.welcome {
+  justify-content: center;
+  gap: 30px;
+}
+.welcome_header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-weight: 200;
+}
+.welcome_header > img {
+  height: 80px;
+}
+.welcome_header > span {
+  font-size: 80px;
+}
+.welcome_subheader > span {
+  font-size: 30px;
+  font-weight: 100;
+}

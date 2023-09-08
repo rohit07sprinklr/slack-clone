@@ -1,0 +1,37 @@
+.message_container {
+  min-height: 80px;
+  padding: 0px 20px;
+  .message_input_container {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #0000001f;
+    &.--active {
+      border: 1px solid #0000004d;
+      box-shadow: 0 0 2px #cccccce0;
+    }
+  }
+}
+
+.message_input_container_textarea {
+  display: flex;
+  width: 95%;
+  font-family: inherit;
+  font-size: 15px;
+  overflow: hidden;
+  min-height: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+}
+#send_button {
+  background-color: green;
+}
+#send_button[disabled='disabled'],
+#send_button:disabled {
+  background-color: inherit;
+  cursor: unset;
+  opacity: 0.3;
+}
