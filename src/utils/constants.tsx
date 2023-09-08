@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://localhost:4000';
+export const BASE_URL = 'https://slack-server-rje7.onrender.com/';
 
 export const DIRECT_CHATS = '/direct-chats';
 export const GROUP_CHATS = '/group-chats';
